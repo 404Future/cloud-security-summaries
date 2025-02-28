@@ -109,4 +109,4 @@ The most complete and user-friendly cloud model, offering fully managed applicat
 
 ### SaaS:
 - Typically used for email, messaging, and business productivity applications.
-- Common in finance and expense tracking solutions, eliminating the need for local installations.
+- Common in finance and expense tracking solutions, eliminating the need for local installations. 
