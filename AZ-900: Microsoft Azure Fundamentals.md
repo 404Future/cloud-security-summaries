@@ -110,3 +110,8 @@ The most complete and user-friendly cloud model, offering fully managed applicat
 ### SaaS:
 - Typically used for email, messaging, and business productivity applications.
 - Common in finance and expense tracking solutions, eliminating the need for local installations.
+
+## Get Full Access
+
+This was a preview of the first section of the study guide. For the full version, visit my [Patreon](https://www.patreon.com/yourpatreonlink](https://www.patreon.com/0xFutureLearning/shop/az-900-microsoft-azure-fundamentals-1121439?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=productshare_creator&utm_content=join_link)) to purchase and download the complete PDF.
+
