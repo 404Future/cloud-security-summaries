@@ -2,14 +2,14 @@
 
 ## Foreword  
 
-When preparing for the **SC-200: Microsoft Security Operations Analyst** exam, I initially followed the **Microsoft Learn learning path** and the **official study guide**. However, I quickly realized that the content was not structured in a study-friendly way—it wasn’t always clear which topics mapped to which exam objectives.  
+When I first started studying for the SC-200 exam, I relied on Microsoft's official learning path and study guide. However, I quickly realized that the material wasn’t always structured in a way that made it easy to see how each topic mapped to the exam objectives. Some key concepts felt buried in long explanations, while others seemed disconnected from the technical documentation.
 
-To create a more effective learning experience, I turned to **Microsoft's technical documentation**. I reviewed the **exam objectives**, identified the relevant technical articles, and built my summary based on those resources. This approach ensured that each exam domain was covered with accurate and up-to-date information.  
+To make studying more effective, I took a different approach. I used Microsoft Learn as my foundation but supplemented it with the official technical documentation, linking relevant articles directly to the exam objectives. This helped me focus on what actually mattered for the test while deepening my practical understanding of Defender XDR, Sentinel, and other security solutions.
 
-In this study guide, I have linked the relevant **Microsoft Learn** documentation to each topic, making it easier to dive deeper into key concepts when needed. My goal is to provide a structured and efficient way to study for SC-200, focusing on the most relevant technical details.  
+This study guide is the result of that process. It’s a structured summary of what I learned, with direct references to Microsoft’s documentation where needed. My goal is to make it easier for others to navigate the material, just like I wish I had when I started.
 
-Hope this helps with your preparation!  
-
+If you find this preview helpful, I offer full versions of my study guides on Patreon, where I go even deeper into the topics. But whether you use this guide alone or as a supplement, I hope it helps you prepare more efficiently and confidently for the exam.
+  
 ---  
 
 # Manage a Security Operations Environment (20-25%)  
