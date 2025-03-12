@@ -1,4 +1,4 @@
-# SC-200 Study Guide  
+# SC-200: Security Operations Analyst Associate (Skills measured as of October 21, 2024) Study Guide  
 
 ## Foreword  
 
