@@ -20,33 +20,33 @@ If you find this preview helpful, I offer full versions of my study guides on Pa
 
 #### 1. Alert Notification Rules (Defender XDR)  
 
-**Purpose:** Sends email alerts for new security threats based on severity.  
-**Permissions Required:** ‘Manage security settings’ or Security Administrator/Global Administrator.  
-**Device Groups:** Supported in Defender for Endpoint Plan 1 & 2 (not in Defender for Business).  
-**RBAC Considerations:** Recipients only receive alerts for assigned device groups.  
-**Best Practice:** Use minimal permissions; Global Administrator only for emergencies.  
+- **Purpose:** Sends email alerts for new security threats based on severity.  
+- **Permissions Required:** ‘Manage security settings’ or **Security Administrator/Global Administrator**.  
+- **Device Groups:** Supported in **Defender for Endpoint Plan 1 & 2** (not in Defender for Business).  
+- **RBAC Considerations:** Recipients only receive alerts for assigned device groups.  
+- **Best Practice:** Use **minimal permissions**; Global Administrator only for emergencies.  
 
 ##### Configuration Steps  
 
-1. Sign in to the Defender portal as Security/Global Admin.  
+1. **Sign in** to the **Defender portal** as Security/Global Admin.  
 2. Navigate to `Settings > Endpoints > General > Email notifications`.  
-3. Add notification rule → Define:  
+3. **Add notification rule** → Define:  
    - Rule Name  
    - Organization Name (optional)  
    - Tenant-specific portal link (optional)  
    - Device Groups (All devices or selected groups)  
    - Alert Severity (Define severity levels)  
-4. Enter recipient emails → Add multiple if needed.  
-5. Send test email (optional) → Save rule.  
+4. **Enter recipient emails** → Add multiple if needed.  
+5. **Send test email** (optional) → **Save rule**.  
 
 ##### Modify/Delete Rules  
 
-- **Edit:** Select the rule → Update details → Save.  
-- **Delete:** Select the rule → Delete.  
+- **Edit:** Select the rule → Update details → **Save**.  
+- **Delete:** Select the rule → **Delete**.  
 
 ##### Troubleshooting  
 
-- Ensure emails aren’t blocked (Junk folder, security filters, mail rules).  
+- Ensure **emails aren’t blocked** (Junk folder, security filters, mail rules).  
 
 📌 **Source:** [Configure alert notifications - Microsoft Defender XDR | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/security/defender-xdr/configure-alert-notifications)  
 
@@ -54,17 +54,17 @@ If you find this preview helpful, I offer full versions of my study guides on Pa
 
 #### 2. Vulnerability Notification Rules (Defender for Endpoint)  
 
-**Purpose:** Sends email alerts for new vulnerability events.  
-**Permissions Required:** ‘Manage security settings’ or Security Administrator.  
-**Device Groups:** Supported in Defender for Endpoint Plan 1 & 2 (not in Defender for Business).  
-**RBAC Considerations:** Notifications are limited to assigned device groups.  
-**Best Practice:** Limit high-privilege roles to improve security.  
+- **Purpose:** Sends email alerts for new vulnerability events.  
+- **Permissions Required:** ‘Manage security settings’ or **Security Administrator**.  
+- **Device Groups:** Supported in **Defender for Endpoint Plan 1 & 2** (not in Defender for Business).  
+- **RBAC Considerations:** Notifications are **limited to assigned device groups**.  
+- **Best Practice:** **Limit high-privilege roles** to improve security.  
 
 ##### Configuration Steps  
 
-1. Sign in to the Defender portal as Security Admin.  
+1. **Sign in** to the **Defender portal** as Security Admin.  
 2. Navigate to `Settings > Endpoints > General > Email notifications > Vulnerabilities`.  
-3. Add notification rule → Define:  
+3. **Add notification rule** → Define:  
    - Rule Name & Description  
    - Activate notification rule  
    - Device Groups (If applicable)  
@@ -74,29 +74,28 @@ If you find this preview helpful, I offer full versions of my study guides on Pa
      - New public exploit  
      - Exploit added to exploit kit  
    - Include organization name (optional)  
-   - Enter recipient emails → Add multiple if needed.  
-4. Review settings → Create rule.  
+4. **Enter recipient emails** → Add multiple if needed.  
+5. **Review settings** → **Create rule**.  
 
 ##### Modify/Delete Rules  
 
-- **Edit:** Select rule → Click Edit rule → Update details.  
-- **Delete:** Select rule → Click Delete.  
+- **Edit:** Select rule → Click **Edit rule** → Update details.  
+- **Delete:** Select rule → Click **Delete**.  
 
 ##### Troubleshooting  
 
-- Check email filters (Junk folder, security software, mail rules).  
+- Check **email filters** (Junk folder, security software, mail rules).  
 
 📌 **Source:** [Configure vulnerability email notifications in Microsoft Defender for Endpoint | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/configure-vulnerability-email-notifications)  
 
 ---
 
-## Configure Microsoft Defender for Endpoint Advanced Features  
+### Configure Microsoft Defender for Endpoint Advanced Features  
 
-### Enabling Advanced Features  
+#### Enabling Advanced Features  
 
-**Access Settings:**  
-- **Defender Portal** > `Settings > Endpoints > Advanced Features`  
-- Toggle features **ON/OFF** and Save Preferences  
+- **Access Settings:** Defender Portal > `Settings > Endpoints > Advanced Features`  
+- **Toggle features ON/OFF** and **Save Preferences** 
 
 #### Key Advanced Features & Configurations  
 
@@ -114,28 +113,65 @@ If you find this preview helpful, I offer full versions of my study guides on Pa
 
 ---
 
-## Configure Endpoint Rules Settings  
+### Configure Endpoint Rules Settings  
 
-### 1. Managing Alert Suppression Rules  
+#### 1. Managing Alert Suppression Rules  
 
-**Purpose:** Suppress known false-positive alerts.  
-**Access:** **Microsoft Defender portal** → `Settings → Endpoints → Rules → Alert suppression`.  
-**Actions:**  
-- View, create, edit, enable/disable, or delete suppression rules.  
-- Option to release previously suppressed alerts.  
-**Permissions:** Requires Security Administrator or Global Administrator role.  
+- **Purpose:** Suppress known false-positive alerts.  
+- **Access:** Defender portal → `Settings → Endpoints → Rules → Alert suppression`.  
+- **Actions:**  
+  - View, create, edit, enable/disable, or delete suppression rules.
+  -  Option to release previously suppressed alerts.  
+- **Permissions:** Requires Security Administrator or Global Administrator role.
 
-📌 **Source:** [Manage Microsoft Defender for Endpoint suppression rules | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/manage-alert-suppression)  
+📌 **Source:** [Manage Microsoft Defender for Endpoint suppression rules | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/manage-alert-suppression)
+
+#### 2. Indicators of Compromise (IoCs) Management
+- **Purpose:** Define detection, prevention, and exclusion policies for threats.
+- **Supported IoC Types:**
+  - **Files** (Hashes) – Block execution, remediation, audit, warn, allow.
+  - **IP Addresses, URLs/Domains** – Same as files.
+  - **Certificates** – Allow or block & remediate only.
+- **Key Considerations**:
+  - 15,000 indicator limit per tenant.
+  - Blocking via file hashes not recommended for apps (use WDAC or AppLocker).
+  - Network protection blocks access after TCP handshake completes.
+  - IoC enforcement depends on Defender settings & configured actions.
+
+📌 **Source:** [Overview of indicators in Microsoft Defender for Endpoint - Microsoft Defender for Endpoint | Microsoft Learn](https://learn.microsoft.com/en-us/defender-endpoint/indicators-overview)
+
+#### 3. Configuring Web Content Filtering
+- **Purpose:** Restrict access to specific web content categories.
+- **Steps to Configure:**
+  - Microsoft Defender portal → `Settings → Endpoints → Rules → Web content filtering`.
+  - **Add new policy** → Name policy.
+  - Select blocked categories.
+  - Assign to device groups.
+  - Review and save policy.
+
+📌 **Source:** [Set up and configure Microsoft Defender for Endpoint Plan 1 - Microsoft Defender for Endpoint | Microsoft Learn](https://learn.microsoft.com/en-us/defender-endpoint/mde-p1-setup-configuration#configure-web-content-filtering)
+
+#### 4. Enforcement & Detection Engines
+- **Cloud Detection Engine:** Scans data for IoC matches, enforcing defined actions.
+- **Endpoint Prevention Engine:** Applies Defender AV policies for alerts & blocks.
+- **Automated Investigation & Remediation:** Overrides verdicts based on IoC settings.
+
+#### 5. Best Practices & Limitations
+- Use **least privilege roles** (avoid Global Administrator unless necessary).
+- Prefer IP/URL indicators over file hashes for web access control.
+- Microsoft Store apps **cannot** be blocked via Defender.
+- Defender for Cloud Apps can override Defender portal IoC settings.
+- Some alert types (e.g., block indicators) generate **informational alerts only**.  
 
 ---
 
-## Manage Automated Investigation and Response Capabilities in Microsoft Defender XDR  
+### Manage Automated Investigation and Response Capabilities in Microsoft Defender XDR  
 
-### 1. Prerequisites  
+#### 1. Prerequisites  
 
 - **Permissions:** Global Administrator or Security Administrator in Microsoft Entra ID/Microsoft 365 Admin Center.  
 
-### 2. Configure Automation Level for Device Groups  
+#### 2. Configure Automation Level for Device Groups  
 
 1. **Access Portal:** Defender Portal → `Settings > Endpoints > Device Groups`  
 2. **Review & Edit Automation Level:**  
@@ -144,14 +180,24 @@ If you find this preview helpful, I offer full versions of my study guides on Pa
    - **Minimal:** Only collects evidence.  
    - **None:** No automated response.  
 
-### 3. Security & Alert Policies in Office 365  
+#### 3. Security & Alert Policies in Office 365  
 
 - **Defender for Office 365 Alert Policies:** Identifies Exchange admin abuse, malware, insider threats.  
-- **Preset Security Policies:** Use **Standard/Strict** to protect emails & content.  
-- **Review Alerts:** Path → **Defender Portal → Policies & Rules > Alert Policy**.  
-- **Remediation Approval:** Email-related remediation requires manual approval in **Action Center**.  
+- **Preset Security Policies:**
+  - Use **Standard/Strict** to protect emails & content.
+  - **Custom Policies?** Use Configuration Analyzer for comparison.
+- **Review Alerts:**
+  - **Path:** Defender Portal → `Policies & Rules > Alert Policy`.
+  - Some alerts trigger automated investigations.
+- **Remediation Approval:**
+  - Email-related remediation **requires manual approval** in **Action Center**.  
 
 📌 **Source:** [Configure automated investigation and response capabilities in Microsoft Defender XDR | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/security/defender-xdr/configure-air)  
+
+#### 4. Modifying Automated Investigation Settings
+- **Change Device Automation Level:**
+  - Defender Portal → `Permissions > Endpoints roles & groups > Device groups`
+  - Select group → Adjust **Automation Level** (Full recommended).
 
 # Manage assets and environments
 
