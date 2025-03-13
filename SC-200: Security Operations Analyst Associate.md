@@ -152,3 +152,223 @@ If you find this preview helpful, I offer full versions of my study guides on Pa
 - **Remediation Approval:** Email-related remediation requires manual approval in **Action Center**.  
 
 📌 **Source:** [Configure automated investigation and response capabilities in Microsoft Defender XDR | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/security/defender-xdr/configure-air)  
+
+# Manage assets and environments
+
+## 1. Configure & Manage Device Groups
+**Purpose:** Group devices for role-based access control (RBAC), auto-remediation, and filtered investigations.
+
+### Key Actions:
+#### Create Device Group:
+- Go to `Settings > Endpoints > Permissions > Device Groups`.
+- Click **Add device group**, name it, and set automation level.
+- Define matching rules (device name, domain, OS, tags).
+- Assign Microsoft Entra user groups for access.
+
+#### Manage Device Groups:
+- Rank priority (1 = highest).
+- Unmatched devices go to **Ungrouped Devices** (default).
+- Edit/Delete groups (note: deleting may affect notification rules).
+
+#### Best Practices:
+- Use tagging for easier management.
+- Assign groups granularly to limit access.
+
+📌 **Source:** [Create and manage device groups in Microsoft Defender for Endpoint](https://learn.microsoft.com/en-us/microsoft-defender-endpoint/create-device-groups)
+
+---
+
+## 2. Role-Based Access Control (RBAC)
+**Why Use RBAC?** Limits user access to Defender data and actions.
+
+### Create RBAC Roles:
+- Go to `Settings > Endpoints > Roles`.
+- Click **Add Role**, define permissions (Security Ops, Vulnerability Mgmt, Live Response).
+- Assign Microsoft Entra group to the role.
+
+### Permissions Breakdown:
+- **Security Ops:** View data, respond to threats.
+- **Defender Vulnerability Mgmt:** Handle remediation, exceptions.
+- **Live Response:**
+  - Basic: Read-only commands, file download.
+  - Advanced: Upload & execute scripts.
+
+#### Editing/Deleting Roles:
+- Edit via `Settings > Endpoints > Roles`.
+- Delete roles via the dropdown menu.
+
+#### Best Practice:
+- Use least privilege (avoid Global Administrator unless necessary).
+
+📌 **Source:** [Create and manage roles for role-based access control](https://learn.microsoft.com/en-us/microsoft-defender-endpoint/create-roles)
+
+---
+
+## 3. Automation Levels in Defender for Endpoint
+**Purpose:** Controls automated threat remediation in AIR (Automated Investigation & Remediation).
+
+### Levels of Automation:
+- **Full Automation (Recommended):** Automatically remediates malicious artifacts. Best for efficiency & security.
+- **Semi-Automation:** Approval needed for remediation in certain locations.
+  - Variants:
+    - All folders: Requires approval for all files.
+    - Core folders: Only system-critical locations need approval.
+    - Non-temp folders: Excludes temporary locations.
+- **No Automation:** No automated remediation or investigation (not recommended).
+
+#### Key Notes:
+- Full automation removes 40% more threats than semi-automation.
+- Defender for Business uses Full Automation by default.
+- View all remediation actions in Action Center.
+- Changes take effect instantly after updating settings.
+
+📌 **Source:** [Automation levels in automated investigation and remediation](https://learn.microsoft.com/en-us/microsoft-defender-endpoint/automation-levels)
+
+---
+
+# Identify unmanaged devices in Microsoft Defender for Endpoint
+
+## 1. Overview
+Device discovery in Microsoft Defender for Endpoint (MDE) identifies unmanaged devices in the network. Helps secure endpoints, network devices, and IoT assets by onboarding them to Defender for Endpoint.
+
+## 2. Discovery Modes
+- **Basic Discovery (Passive):** Uses SenseNDR.exe to collect network traffic data. Limited visibility—only detects devices seen in existing network traffic.
+- **Standard Discovery (Active) – Recommended:** Uses multicast queries and active probing to find more devices. Provides enriched device information. Default mode since July 19, 2021.
+
+## 3. Device Inventory & Onboarding Status
+- **Onboarded:** Device is managed by Defender for Endpoint.
+- **Can be onboarded:** Detected and supported but not yet onboarded.
+- **Unsupported:** Detected but not supported by Defender for Endpoint.
+- **Insufficient info:** Requires standard discovery for more details.
+
+## 4. Network Device Discovery
+Uses authenticated remote scans (agentless) via Defender for Endpoint sensors. Discovers routers, switches, firewalls, WLAN controllers, VPN gateways.
+
+## 5. Advanced Hunting for Unmanaged Devices
+- Find discovered devices 
+
+    DeviceInfo
+    | summarize arg_max(Timestamp, *) by DeviceId  
+    | where isempty(MergedToDeviceId)  
+    | where OnboardingStatus != "Onboarded"
+
+- Identify which onboarded device detected them 
+
+    DeviceInfo
+    | where OnboardingStatus != "Onboarded"
+    | summarize arg_max(Timestamp, *) by DeviceId  
+    | where isempty(MergedToDeviceId)  
+    | limit 100  
+    | invoke SeenBy()  
+    | project DeviceId, DeviceName, DeviceType, SeenBy
+
+- Analyze network connections from non-onboarded devices 
+
+    DeviceNetworkEvents
+    | where ActionType == "ConnectionAcknowledged" or ActionType == "ConnectionAttempt"
+    | take 10
+
+## 6. Defender for IoT Integration
+Extends discovery to OT and Enterprise IoT devices (e.g., VoIP, printers, smart TVs). Works via Microsoft Defender for IoT in Defender portal.
+
+## 7. Security Recommendations & Vulnerability Management
+Found under **Defender Vulnerability Management > Security Recommendations**. Helps prioritize onboarding and securing high-risk unmanaged devices.
+
+📌 **Source:** [Device discovery overview - Microsoft Defender for Endpoint](https://learn.microsoft.com/en-us/microsoft-defender-endpoint/device-discovery)
+
+---
+
+# Discover unprotected resources by using Defender for Cloud
+
+### Key Concepts:
+- **Unprotected Resources:** Resources without appropriate security settings or protection.
+- **Defender for Cloud Recommendations:** Suggestions to secure unprotected resources.
+- **Security Alerts:** Notifications about unprotected or misconfigured resources.
+
+### Steps to Discover Unprotected Resources:
+1. Enable Defender for Cloud: Activate in the Azure Portal for resource monitoring.
+2. Review Security Alerts: Identify flagged resources with missing protections.
+3. Review Security Recommendations: Implement actionable steps to secure resources.
+
+### Best Practices:
+- Regularly monitor Security Alerts for new vulnerabilities.
+- Apply recommended policies to secure resources.
+- Use tags for better resource classification.
+
+### Important Tools:
+- **Azure Arc:** Extends coverage to non-Azure resources.
+- **RBAC:** Ensures proper permissions for resource management.
+
+### Critical Functions:
+- **CSPM (Cloud Security Posture Management):** Tracks multi-cloud security.
+- **Resource Inventory:** Discovers and tracks unprotected resources.
+
+### Actionable Steps:
+- Enable Defender for Cloud to start discovery.
+- Use Azure Arc for non-Azure resources.
+- Review Secure Score to assess environment security.
+
+📌 **Source:**
+- [What is Azure Resource Manager? - Azure Resource Manager](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview)
+- [Azure Arc overview - Azure Arc](https://learn.microsoft.com/en-us/azure/azure-arc/overview)
+- [Microsoft Defender for Cloud Overview](https://learn.microsoft.com/en-us/microsoft-defender-cloud/overview)
+
+---
+
+# Identify and remediate devices at risk by using Microsoft Defender Vulnerability Management
+
+### High-Level Overview:
+**Purpose:** Identify, assess, and remediate vulnerabilities across critical assets to reduce cyber risk.  
+**Key Features:** Asset visibility, intelligent risk prioritization, built-in remediation tools, cross-platform support (Windows, macOS, Linux, Android, iOS, network devices).  
+**Core Goals:** Prioritize vulnerabilities, provide mitigation strategies, and track remediation efforts.
+
+### Key Components:
+- **Asset Discovery & Monitoring:** Continuous scanning of devices, even offline. Centralized view of software, certificates, hardware, firmware, and browser extensions.
+- **Vulnerability Assessment Tools:** Security Baselines, Software Inventory, Network Shares, Event Timelines for vulnerability tracking and prioritization.
+- **Risk-based Prioritization:** Leverage Microsoft threat intelligence and breach likelihood. Focus on high-risk, actively exploited vulnerabilities.
+
+### Remediation & Tracking:
+- **Built-in Workflows:** Create remediation tasks in Microsoft Intune. Block vulnerable applications on specific devices. Track remediation progress in real time.
+- **Remediation Strategies:** Actionable security recommendations (e.g., patches, configuration changes). Alternative mitigations for vulnerabilities when direct patching isn't possible.
+
+### Navigation & Reporting:
+- **Dashboard:** View risk scores, recommendations, top vulnerabilities, and remediation activities.
+- **Recommendations:** Lists of security issues, with links to remediation options.
+- **Inventories & Weaknesses:** Access asset lists and common vulnerabilities (CVE tracking).
+- **APIs:** Automate workflows with Defender for Endpoint APIs for vulnerabilities, recommendations, and machine data.
+
+### Best Practices:
+- Prioritize vulnerabilities based on exposure and criticality.
+- Regularly assess devices, even when offline, to maintain up-to-date visibility.
+- Use real-time monitoring to track and ensure successful remediation.
+
+📌 **Source:** [Microsoft Defender Vulnerability Management](https://learn.microsoft.com/en-us/microsoft-defender-vulnerability-management)
+
+---
+
+# Mitigate risk by using Exposure Management in Microsoft Defender XDR
+
+### High-Level Overview:
+**Purpose:** Provides a unified view of organizational security posture and attack surface to proactively manage and mitigate exposure risks.  
+**Core Functions:** Asset discovery, attack surface management, exposure insights, risk mitigation, and attack path simulation.
+
+### Key Features:
+- **Unified View:** Continuously discovers assets and workloads, creating an up-to-date inventory and attack surface.
+- **Attack Surface Management:** Visualize and analyze attack surfaces across on-premises, hybrid, and multicloud environments. Use the enterprise exposure graph to query and assess risk.
+- **Critical Asset Management:** Mark assets as critical for focused security efforts. Prioritize and safeguard critical assets for business continuity.
+- **Exposure Insights:** Aggregate security posture data for actionable insights, including security events, recommendations, and metrics.
+
+### Risk Mitigation:
+- **Attack Path Simulation:** Generate attack paths based on asset and workload data. Simulate attack scenarios and identify exploitable weaknesses.
+- **Actionable Recommendations:** Use insights and recommendations to mitigate attack paths.
+
+### Data Integration:
+- **Data Connectors:** Integrate data from multiple sources into a unified view for deeper security insights.
+
+### Best Practices:
+- Continuously monitor and update asset inventory to keep exposure data current.
+- Leverage the enterprise exposure graph for comprehensive risk analysis.
+- Prioritize remediation based on attack paths and critical asset visibility.
+
+📌 **Source:** [What is Microsoft Security Exposure Management?](https://learn.microsoft.com/en-us/microsoft-defender-exposure-management)
+
