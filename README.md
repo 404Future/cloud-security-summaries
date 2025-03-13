@@ -1,7 +1,7 @@
 # Welcome to my Cloud Security Summaries Repository. 
 
 I've created these summaries for my personal study but decided to share them to help others study more efficiently.  
-If you find them useful and would like to support my work, you can **buy me a coffee** ☕️—your support incentivizes me to create more content!  
+If you find them useful and would like to support my work, you can **buy me a coffee** ☕️!  
 
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support%20My%20Work-orange)](https://buymeacoffee.com/404future)
 
