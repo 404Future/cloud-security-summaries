@@ -278,7 +278,7 @@ DeviceNetworkEvents
 Extends discovery to OT and Enterprise IoT devices (e.g., VoIP, printers, smart TVs). Works via Microsoft Defender for IoT in Defender portal.
 
 ## 7. Security Recommendations & Vulnerability Management
-Found under **Defender Vulnerability Management > Security Recommendations**. Helps prioritize onboarding and securing high-risk unmanaged devices.
+Found under `Defender Vulnerability Management > Security Recommendations`. Helps prioritize onboarding and securing high-risk unmanaged devices.
 
 📌 **Source:** [Device discovery overview - Microsoft Defender for Endpoint](https://learn.microsoft.com/en-us/microsoft-defender-endpoint/device-discovery)
 
