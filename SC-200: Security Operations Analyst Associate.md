@@ -29,7 +29,7 @@ If you find this preview helpful, I offer full versions of my study guides on Pa
 ##### Configuration Steps  
 
 1. Sign in to the Defender portal as Security/Global Admin.  
-2. Navigate to **Settings > Endpoints > General > Email notifications**.  
+2. Navigate to `Settings > Endpoints > General > Email notifications`.  
 3. Add notification rule → Define:  
    - Rule Name  
    - Organization Name (optional)  
@@ -63,7 +63,7 @@ If you find this preview helpful, I offer full versions of my study guides on Pa
 ##### Configuration Steps  
 
 1. Sign in to the Defender portal as Security Admin.  
-2. Navigate to **Settings > Endpoints > General > Email notifications > Vulnerabilities**.  
+2. Navigate to `Settings > Endpoints > General > Email notifications > Vulnerabilities`.  
 3. Add notification rule → Define:  
    - Rule Name & Description  
    - Activate notification rule  
@@ -95,7 +95,7 @@ If you find this preview helpful, I offer full versions of my study guides on Pa
 ### Enabling Advanced Features  
 
 **Access Settings:**  
-- **Defender Portal > Settings > Endpoints > Advanced Features**  
+- **Defender Portal** > `Settings > Endpoints > Advanced Features`  
 - Toggle features **ON/OFF** and Save Preferences  
 
 #### Key Advanced Features & Configurations  
@@ -119,7 +119,7 @@ If you find this preview helpful, I offer full versions of my study guides on Pa
 ### 1. Managing Alert Suppression Rules  
 
 **Purpose:** Suppress known false-positive alerts.  
-**Access:** **Microsoft Defender portal → Settings → Endpoints → Rules → Alert suppression**.  
+**Access:** **Microsoft Defender portal** → `Settings → Endpoints → Rules → Alert suppression`.  
 **Actions:**  
 - View, create, edit, enable/disable, or delete suppression rules.  
 - Option to release previously suppressed alerts.  
@@ -137,7 +137,7 @@ If you find this preview helpful, I offer full versions of my study guides on Pa
 
 ### 2. Configure Automation Level for Device Groups  
 
-1. **Access Portal:** Defender Portal → Settings > Endpoints > Device Groups  
+1. **Access Portal:** Defender Portal → `Settings > Endpoints > Device Groups`  
 2. **Review & Edit Automation Level:**  
    - **Full (Recommended):** Auto-remediates threats.  
    - **Semi:** Approves some actions.  
@@ -247,26 +247,32 @@ Uses authenticated remote scans (agentless) via Defender for Endpoint sensors. D
 ## 5. Advanced Hunting for Unmanaged Devices
 - Find discovered devices 
 
-    DeviceInfo
-    | summarize arg_max(Timestamp, *) by DeviceId  
-    | where isempty(MergedToDeviceId)  
-    | where OnboardingStatus != "Onboarded"
+```
+DeviceInfo
+| summarize arg_max(Timestamp, *) by DeviceId  
+| where isempty(MergedToDeviceId)  
+| where OnboardingStatus != "Onboarded"
+```
 
 - Identify which onboarded device detected them 
 
-    DeviceInfo
-    | where OnboardingStatus != "Onboarded"
-    | summarize arg_max(Timestamp, *) by DeviceId  
-    | where isempty(MergedToDeviceId)  
-    | limit 100  
-    | invoke SeenBy()  
-    | project DeviceId, DeviceName, DeviceType, SeenBy
+```
+DeviceInfo
+| where OnboardingStatus != "Onboarded"
+| summarize arg_max(Timestamp, *) by DeviceId  
+| where isempty(MergedToDeviceId)  
+| limit 100  
+| invoke SeenBy()  
+| project DeviceId, DeviceName, DeviceType, SeenBy
+```
 
 - Analyze network connections from non-onboarded devices 
 
-    DeviceNetworkEvents
-    | where ActionType == "ConnectionAcknowledged" or ActionType == "ConnectionAttempt"
-    | take 10
+```
+DeviceNetworkEvents
+| where ActionType == "ConnectionAcknowledged" or ActionType == "ConnectionAttempt"
+| take 10
+```
 
 ## 6. Defender for IoT Integration
 Extends discovery to OT and Enterprise IoT devices (e.g., VoIP, printers, smart TVs). Works via Microsoft Defender for IoT in Defender portal.
