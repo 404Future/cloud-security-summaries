@@ -702,3 +702,49 @@ DeviceNetworkEvents
 📌 Source: [Roles and permissions in Microsoft Sentinel | Microsoft Learn](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/data-retention-configure?toc=%2Fazure%2Fsentinel%2FTOC.json&bc=%2Fazure%2Fsentinel%2Fbreadcrumb%2Ftoc.json&tabs=portal-3%2Cportal-1%2Cportal-2)
 
 --- 
+# Ingest data sources in Microsoft Sentinel
+
+## Identify data sources to be ingested for Microsoft Sentinel
+
+### Data Ingestion Overview  
+- Microsoft Sentinel uses data connectors to ingest security data from various sources.  
+- Types of connectors:  
+	- Built-in (Microsoft Services): Defender XDR (includes Office 365, Entra ID, Defender for Identity, Defender for Cloud Apps).  
+	- Third-Party & Custom: Syslog, CEF, REST API, Log Ingestion API, Azure Monitor Agent (AMA).  
+
+### Microsoft Sentinel Solutions & Connectors  
+- Solutions:
+	- Pre-packaged security content (connectors, workbooks, analytics rules, playbooks).  
+- Installed connectors:
+	- View in Microsoft Sentinel > Data Connectors page.  
+- To add new connectors:
+	- Install solutions from the Content Hub.  
+
+### Custom Data Connectors  
+- Use when no built-in solution exists.  
+- Methods:  
+	- Codeless Connector Platform (for APIs).  
+	- Log Ingestion API (via Azure Function/Logic App).  
+	- Azure Monitor Agent (AMA) or Logstash.  
+
+### Agent-Based Integration  
+- Syslog & CEF (Linux-based sources):  
+	- Install Azure Monitor Agent (AMA) on a log forwarder or directly on the source.  
+	- Syslog events → Syslog table, CEF events → CommonSecurityLog table.  
+- Custom Logs: Log Analytics custom log agent for Windows/Linux file-based ingestion.  
+
+### Service-to-Service Integrations  
+- Native integration for Microsoft services (Azure, Windows, Defender) & AWS.  
+- Configuration:
+	- Follow setup instructions on each Microsoft Sentinel data connector page.  
+
+### Support Types for Data Connectors  
+| Type | Description | Support Provided By |  
+|---------|---------------|--------------------|  
+| Microsoft-Supported | Microsoft-authored connectors for first-party & some third-party sources. | Microsoft Azure Support Plans |  
+| Partner-Supported | Third-party vendor connectors. | Vendor/MSSP/SI support |  
+| Community-Supported | Open-source/community-created connectors. | Microsoft Sentinel GitHub Community |  
+
+📌 Source: [Microsoft Sentinel data connectors | Microsoft  Learn](https://learn.microsoft.com/en-us/azure/sentinel/connect-data-sources?tabs=azure-portal)
+
+---
