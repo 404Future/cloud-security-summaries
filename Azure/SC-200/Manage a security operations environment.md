@@ -748,3 +748,62 @@ DeviceNetworkEvents
 📌 Source: [Microsoft Sentinel data connectors | Microsoft  Learn](https://learn.microsoft.com/en-us/azure/sentinel/connect-data-sources?tabs=azure-portal)
 
 ---
+## Implement and use Content hub solutions
+
+### Overview
+- Centralized platform to discover, install, and manage built-in security solutions.
+- Includes prepackaged solutions and standalone content (rules, playbooks, workbooks, queries).
+- Requires Microsoft Sentinel Contributor role at the resource group level.
+
+### Discover Content
+- Navigate to Content hub via:
+	- Azure portal: Content management > Content hub
+	- Defender portal: Microsoft Sentinel > Content management > Content hub
+- Use filters: status, content type, support, provider, category.
+- Search supports fuzzy matching & AI-driven queries.
+
+### Install & Update Solutions
+- Install content individually or in bulk.
+- Steps:
+  1. Locate solution in Content hub.
+  2. Select View details > Create/Update.
+  3. Provide Subscription, Resource Group, Workspace.
+  4. Complete configuration steps per content type.
+  5. Review + Create and validate before deployment.
+  6. If dependencies exist, select Install with dependencies.
+  7. Post-installation, configure additional content if required.
+
+### Bulk Install & Updates
+- Switch to List View.
+- Select multiple solutions/content items.
+- Click Install/Update.
+- Standalone content updates automatically.
+
+### Enable & Manage Installed Content
+- Data Connectors
+	- Navigate to the Connector page.
+	- Complete setup; status changes from Disconnected → Connected.
+- Analytics Rules
+	- View in Analytics template gallery.
+	- Select Create rule (if not yet created) or Edit existing rule.
+	- Active rules are listed under Content created.
+- Hunting Queries
+	- Select Run query for immediate results.
+	- Clone and modify query via Hunting gallery.
+- Workbooks
+	- Select View template > Save to create an instance.
+	- View saved workbooks under Created content.
+- Parsers
+	- Installed as workspace functions.
+	- Open Log Analytics > Load function code > Use in editor.
+- Playbooks
+	- Select playbook template > Create playbook.
+	- Manage active playbooks under Created content.
+
+### Support Model
+- Located in the Support box on the solution's detail pane.
+- Additional details (Publisher, Provider, Plan ID) under Usage information & support.
+
+📌 Source: [Discover and deploy Microsoft Sentinel out-of-the-box content from Content hub | Microsoft Learn](https://learn.microsoft.com/en-us/azure/sentinel/sentinel-solutions-deploy?tabs=azure-portal)
+
+---
