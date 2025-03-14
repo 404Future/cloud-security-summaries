@@ -807,3 +807,5 @@ DeviceNetworkEvents
 📌 Source: [Discover and deploy Microsoft Sentinel out-of-the-box content from Content hub | Microsoft Learn](https://learn.microsoft.com/en-us/azure/sentinel/sentinel-solutions-deploy?tabs=azure-portal)
 
 ---
+## Configure and use Microsoft connectors for Azure resources, including Azure Policy and diagnostic settings
+
