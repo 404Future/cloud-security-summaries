@@ -7,4 +7,4 @@ If you find them useful and would like to support my work, you can **buy me a co
 
 
 ## Azure
-- [SC-200: Security Operations Analyst Associate (Skills measured as of October 21, 2024)](https://github.com/404Future/cloud-security-summaries/blob/main/Azure/SC-200.md)
+- [SC-200: Security Operations Analyst Associate (Skills measured as of October 21, 2024)](https://github.com/404Future/cloud-security-summaries/blob/main/Azure/SC-200/README.md)
