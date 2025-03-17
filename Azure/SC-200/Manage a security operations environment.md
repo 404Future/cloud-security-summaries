@@ -2,266 +2,317 @@
 
 ## Configure alert and vulnerability notification rules
 
-### Alert Notification Rules (Defender XDR)
-- Purpose:
-	- Sends email alerts for new security threats based on severity.
-- Permissions Required: 
-	- ‘Manage security settings’ or Security Administrator/Global Administrator.
-- Device Groups: 
-	- Supported in Defender for Endpoint Plan 1 & 2 (not in Defender for Business).
-- RBAC Considerations: 
-	- Recipients only receive alerts for assigned device groups.
-- Best Practice: 
-	- Use minimal permissions; Global Administrator only for emergencies.
+- **Access the Microsoft Defender Portal:**
+  - Sign in with an account assigned the Security Administrator or Global Administrator role. 
 
-### Configuration Steps
-1. Sign in to the Defender portal as Security/Global Admin. 
-2. Navigate to Settings > Endpoints > General > Email notifications.   
-3. Add notification rule → Define:
-	- Rule Name 
-	- Organization Name (optional)
-	- Tenant-specific portal link (optional)
-	- Device Groups (All devices or selected groups)
-	- Alert Severity (Define severity levels)
-4. Enter recipient emails → Add multiple if needed.
-5. Send test email (optional) → Save rule.
+- **Navigate to Email Notifications Settings:**
+  - Go to `Settings` > `Endpoints` > `General` > `Email notifications`. 
 
-### Modify/Delete Rules
-- Edit: 
-	- Select the rule → Update details → Save.
-- Delete: 
-	- Select the rule → Delete.
+- **Create a New Notification Rule:**
+  - Click `Add item`.
+  - Provide a `Rule name` and, optionally, a description.
+  - Optionally, include:
+    - Organization name in the email.
+    - Tenant-specific portal link for direct access.
+    - Device information in the email body.
+  - Define the scope:
+    - For alerts:
+      - Select whether to notify for alerts on all devices (Global Administrator only) or specific device groups.
+      - Choose the alert severity levels that trigger notifications.
+    - For vulnerabilities:
+      - Choose vulnerability events to trigger notifications:
+        - New vulnerability found (with severity threshold).
+        - Exploit verified.
+        - New public exploit.
+        - Exploit added to an exploit kit.
 
-### Troubleshooting
-- Ensure emails aren’t blocked (Junk folder, security filters, mail rules).
+- **Add Notification Recipients:**
+  - Enter the recipient's email address and click `Add recipient`. Repeat for multiple recipients.
+  - Optionally, send a test email to verify delivery.
 
-📌 Source: [Configure alert notifications - Microsoft Defender XDR | Microsoft Learn](https://learn.microsoft.com/en-us/defender-xdr/configure-email-notifications)
+- **Finalize and Save the Rule:**
+  - Review all settings.
+  - Click `Save notification rule` to activate.
 
-### Vulnerability Notification Rules (Defender for Endpoint)
-- Purpose: 
-	- Sends email alerts for new vulnerability events.
-- Permissions Required: 
-	- ‘Manage security settings’ or Security Administrator.
-- Device Groups: 
-	- Supported in Defender for Endpoint Plan 1 & 2 (not in Defender for Business).
-- RBAC Considerations: 
-	- Notifications are limited to assigned device groups.
-- Best Practice: 
-	- Limit high-privilege roles to improve security. 
+- **Edit or Delete Notification Rules:**
+  - To edit:
+    - Select the desired rule.
+    - Modify settings as needed.
+    - Click `Save notification rule`.
+  - To delete:
+    - Select the desired rule.
+    - Click `Delete`.
 
-### Configuration Steps
-1. Sign in to the Defender portal as Security Admin.
-2. Navigate to Settings > Endpoints > General > Email notifications > Vulnerabilities.
-3. Add notification rule → Define:
-	- Rule Name & Description
-	- Activate notification rule
-	- Device Groups (If applicable)
-	- Vulnerability Events:
-		- New vulnerability found
-		- Exploit verified
-		- New public exploit
-		- Exploit added to exploit kit
-	- Include organization name (optional)
-4. Enter recipient emails → Add multiple if needed.
-5. Review settings → Create rule.
+**Best Practices:**
 
-### Modify/Delete Rules
-- Edit: 
-	- Select rule → Click Edit rule → Update details.
-- Delete: 
-	- Select rule → Click Delete.
+- **Use Least Privileged Roles:**
+  - Assign roles with the minimum permissions necessary. Reserve Global Administrator roles for essential scenarios to enhance security. 
 
-### Troubleshooting
-- Check email filters (Junk folder, security software, mail rules).
+- **Verify Email Deliverability:**
+  - Ensure notifications aren't filtered as junk or blocked by email security products. 
 
-📌  Source: [Configure vulnerability email notifications in Microsoft Defender for Endpoint - Microsoft Defender for Endpoint | Microsoft Learn](https://learn.microsoft.com/en-us/defender-endpoint/configure-vulnerability-email-notifications)
+- **Regularly Review and Update Rules:**
+  - Periodically assess notification rules to ensure they align with current security requirements and organizational changes.
+
+📌 Source: 
+- [Configure alert notifications](https://learn.microsoft.com/en-us/defender-xdr/configure-email-notifications)
+- [Configure vulnerability email notifications in Microsoft Defender for Endpoint](https://learn.microsoft.com/en-us/defender-endpoint/configure-vulnerability-email-notifications)
 
 --- 
 ## Configure Microsoft Defender for Endpoint advanced features
 
-### Enabling Advanced Features
-- Access Settings: 
-	- Navigate to Defender Portal > Settings > Endpoints > Advanced Feature
-- Toggle features ON/OFF and Save Preferences
+- **Access Advanced Features:**
+  - Sign in to the Microsoft Defender portal.
+  - Navigate to `Settings` > `Endpoints` > `Advanced features`. 
 
-### Key Advanced Features & Configurations
+- **Enable or Disable Features:**
+  - Toggle desired features On or Off.
+  - Click `Save preferences` to apply changes. 
 
-| Feature                                                | Purpose                                                                                                           |
-| ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| Restrict Incident Correlation by Device Groups     | Limits alert correlation within defined device groups. (Recommended: Leave OFF unless local SOC needs isolation)  |
-| Enable EDR in Block Mode                           | Blocks malicious artifacts even when Defender AV is in passive mode                                               |
-| Automatically Resolve Alerts                       | Auto-closes alerts if no threats are found or are remediated. Does not override manually resolved alerts.         |
-| Allow or Block Files                               | Requires Defender AV as active AV + Cloud Protection enabled. Toggle Settings > Endpoints > Allow or Block File |
-| Tamper Protection                                  | Prevents unauthorized changes to security settings                                                                |
-| Custom Network Indicators                          | Create allow/block lists for IPs, domains, URLs                                                                   |
-| Web Content Filtering                              | Blocks unwanted content + tracks web activity. equires Network Protection in block mode.                          |
-| Hide Duplicate Device Records                          | Identifies & hides duplicate records (default ON)                                                                 |
-| Show User Details                                      | Displays Microsoft Entra ID info (user photo, title, department)                                                  |
-| Skype for Business Integration                         | Allows direct communication with users during incident response                                                   |
-| Microsoft Defender for Cloud Apps                      | Forwards Defender signals to Defender for Cloud Apps for cloud visibility                                         |
-| Unified Audit Log                                      | Enables Microsoft Purview search for security event logs                                                          |
-| Device Discovery                                       | Identifies unmanaged devices using onboarded endpoints                                                            |
-| Download Quarantined Files                             | Enables file download from quarantine (default ON)                                                                |
-| Streamlined Connectivity for Onboarding                | Sets default onboarding package for applicable OS                                                                 |
-| Live Response Features                                 | Start live response sessions on devices & servers. Option to run unsigned scripts during sessions.                |
-| Deception Capabilities                                 | Deploy lures & decoys to detect attackers. Managed via Rules > Deception Rules                                  |
-| Share Endpoint Alerts with Microsoft Compliance Center | Integrates with Microsoft Purview for insider risk detection                                                      |
-| Microsoft Intune Connection                            | Enables device risk-based Conditional Access                                                                      |
-| Authenticated Telemetry                                | Prevents spoofed security telemetry data                                                                          |
-| Preview Features                                       | Grants early access to new Defender for Endpoint features                                                         |
-| Endpoint Attack Notifications                          | Provides proactive threat hunting from Microsoft experts                                                          |
-  
-📌  Source: [Configure advanced features in Microsoft Defender for Endpoint - Microsoft Defender for Endpoint | Microsoft Learn](https://learn.microsoft.com/en-us/defender-endpoint/advanced-features)
+**Key Advanced Features:**
+
+- **Restrict Correlation to Within Scoped Device Groups:**
+  - Limits incident correlations to specific device groups.
+  - Recommended to keep Off unless necessary. 
+
+- **Enable EDR in Block Mode:**
+  - Allows Endpoint Detection and Response to block malicious artifacts, even if Microsoft Defender Antivirus is in passive mode. 
+
+- **Automatically Resolve Alerts:**
+  - Auto-resolves alerts where no threats are found or threats are remediated.
+  - Influences device risk level calculations. 
+
+- **Allow or Block File:**
+  - Requires Microsoft Defender Antivirus as the active antimalware solution with cloud-based protection enabled.
+  - Allows blocking of potentially malicious files, preventing execution on devices. 
+
+- **Hide Potential Duplicate Device Records:**
+  - Identifies and hides duplicate device records based on hostname and last seen time.
+  - Ensures accurate device information in the portal.
+
+**Best Practices:**
+
+- **Regularly Review Feature Settings:**
+  - Periodically assess and adjust advanced features to align with organizational security requirements.
+
+- **Understand Feature Dependencies:**
+  - Some features, like 'Allow or Block File', require specific configurations (e.g., active Microsoft Defender Antivirus).
+
+- **Monitor Impact on Security Operations:**
+  - Features such as 'Automatically Resolve Alerts' can influence device risk levels and incident management workflows.
+
+For detailed information on each feature and its configuration, refer to Microsoft's official documentation. 
+
+📌  Source: [Configure advanced features in Microsoft Defender for Endpoint](https://learn.microsoft.com/en-us/defender-endpoint/advanced-features)
 
 ---  
 ## Configure endpoint rules settings
 
-### Managing Alert Suppression Rules
-- Purpose: 
-	- Suppress known false-positive alerts.
-- Access: 
-	- Microsoft Defender portal → Settings → Endpoints → Rules → Alert suppression.
-- Actions:
-	- View, create, edit, enable/disable, or delete suppression rules.
-	- Option to release previously suppressed alerts.
-- Permissions: 
-	- Requires Security Administrator or Global Administrator role.
+**1. Manage Alert Suppression Rules**
 
-📌  Source: [Manage Microsoft Defender for Endpoint suppression rules - Microsoft Defender for Endpoint | Microsoft Learn](https://learn.microsoft.com/en-us/defender-endpoint/manage-suppression-rules)    
+- **Purpose:**
+  - Suppress alerts from known benign tools or processes to reduce noise.
 
-### Indicators of Compromise (IoCs) Management
-- Purpose: 
-	- Define detection, prevention, and exclusion policies for threats.
-- Supported IoC Types:
-	- Files (Hashes) – Block execution, remediation, audit, warn, allow.
-	- IP Addresses, URLs/Domains – Same as files.
-	- Certificates – Allow or block & remediate only.
-- Key Considerations:
-	- 15,000 indicator limit per tenant.
-	- Blocking via file hashes not recommended for apps (use WDAC or AppLocker).
-	- Network protection blocks access after TCP handshake completes.
-	- IoC enforcement depends on Defender settings & configured actions.
+- **Steps to Create a Suppression Rule:**
+  1. **Sign in** to the Microsoft Defender portal with appropriate administrative privileges.
+  2. **Navigate** to `Settings` > `Endpoints` > `Rules` > `Alert suppression`.
+  3. **Select** an existing alert to base the suppression rule on.
+  4. **Define** the conditions and scope for the rule.
+  5. **Save** the rule to activate suppression.
 
-📌  Source: [Overview of indicators in Microsoft Defender for Endpoint - Microsoft Defender for Endpoint | Microsoft Learn](https://learn.microsoft.com/en-us/defender-endpoint/indicators-overview) 
+- **Managing Suppression Rules:**
+  - **View** all suppression rules under `Alert suppression`.
+  - **Edit**, **disable**, or **delete** rules as necessary.
 
-### Configuring Web Content Filtering
-- Purpose: 
-	- Restrict access to specific web content categories.
-- Steps to Configure:
-	- Microsoft Defender portal → Settings → Endpoints → Rules → Web content filtering.
-	- Add new policy → Name policy.
-	- Select blocked categories.
-	- Assign to device groups.
-	- Review and save policy.
+- **Best Practices:**
+  - Regularly **review** suppression rules to ensure they align with current security policies.
+  - Use **least privileged roles** when assigning administrative permissions.
 
-📌  Source: [Set up and configure Microsoft Defender for Endpoint Plan 1 - Microsoft Defender for Endpoint | Microsoft Learn](https://learn.microsoft.com/en-us/defender-endpoint/mde-p1-setup-configuration#configure-web-content-filtering)
+**2. Configure Web Content Filtering**
 
-### Enforcement & Detection Engines
-- Cloud Detection Engine: 
-	- Scans data for IoC matches, enforcing defined actions.
-- Endpoint Prevention Engine: 
-	- Applies Defender AV policies for alerts & blocks.
-- Automated Investigation & Remediation: 
-	- Overrides verdicts based on IoC settings.
+- **Purpose:**
+  - Monitor and control access to websites based on content categories to enhance security and compliance.
 
-### Best Practices & Limitations
-- Use least privilege roles (avoid Global Administrator unless necessary).
-- Prefer IP/URL indicators over file hashes for web access control.
-- Microsoft Store apps cannot be blocked via Defender.
-- Defender for Cloud Apps can override Defender portal IoC settings.
-- Some alert types (e.g., block indicators) generate informational alerts only.
+- **Prerequisites:**
+  - Ensure devices are **onboarded** to Microsoft Defender for Endpoint.
+  - Verify that **network protection** is enabled.
+
+- **Steps to Set Up Web Content Filtering:**
+  1. **Access** the Microsoft Defender portal.
+  2. **Navigate** to `Settings` > `Endpoints` > `Rules` > `Web content filtering`.
+  3. **Click** `+ Add policy`.
+  4. **Name** the policy and provide a description.
+  5. **Select** categories to block (avoid selecting "Uncategorized").
+  6. **Assign** the policy to specific device groups.
+  7. **Save** the policy to enforce it.
+
+- **Monitoring and Reporting:**
+  - **Review** web activity reports in the portal to assess policy effectiveness.
+
+- **Best Practices:**
+  - **Tailor** content categories to align with organizational policies.
+  - **Regularly update** policies to adapt to emerging threats and changing requirements.
+
+**3. Manage Indicators (Indicators of Compromise - IoCs)**
+
+- **Purpose:**
+  - Define detection, prevention, and exclusion rules for known malicious entities such as file hashes, IP addresses, and URLs.
+
+- **Steps to Create an Indicator:**
+  1. **Sign in** to the Microsoft Defender portal.
+  2. **Navigate** to `Settings` > `Endpoints` > `Indicators`.
+  3. **Select** the type of indicator to create (e.g., File hash, IP address, URL/domain).
+  4. **Specify** the details of the indicator, including the action to take (e.g., Allow, Block) and the scope (device groups).
+  5. **Set** the expiration date for the indicator, if applicable.
+  6. **Save** the indicator to apply the rule.
+
+- **Managing Indicators:**
+  - **View** all configured indicators under the `Indicators` section.
+  - **Edit**, **disable**, or **delete** indicators as necessary.
+
+- **Best Practices:**
+  - **Create** indicators for known malicious entities to enhance threat detection and prevention.
+  - **Regularly review** and **update** indicators to maintain an effective security posture.
+  - **Avoid** creating indicators for entities already covered by Microsoft's threat intelligence to prevent redundancy.
+
+📌  Source:
+- [Manage Microsoft Defender for Endpoint suppression rules](https://learn.microsoft.com/en-us/defender-endpoint/manage-suppression-rules)    
+- [Set up and configure Microsoft Defender for Endpoint Plan 1](https://learn.microsoft.com/en-us/defender-endpoint/mde-p1-setup-configuration#configure-web-content-filtering)
+- [Overview of indicators in Microsoft Defender for Endpoint](https://learn.microsoft.com/en-us/defender-endpoint/indicators-overview) 
 
 ---
 ## Manage automated investigation and response capabilities in Microsoft Defender XDR
 
-### Prerequisites
-- Permissions: 
-	- Global Administrator or Security Administrator in Microsoft Entra ID/Microsoft 365 Admin Center.
+**1. Overview of AIR in Microsoft Defender XDR**
 
-### Configure Automation Level for Device Groups
-- Access Portal: 
-	- Defender Portal → Settings > Endpoints > Device Groups
-- Review & Edit Automation Level:
-	- Full (Recommended): Auto-remediates threats.
-	- Semi: Approves some actions.
-	- Minimal: Only collects evidence.
-	- None: No automated response.
+- **Purpose:**
+  - Automate threat investigations and responses to reduce alert volume and enhance security operations efficiency.
 
-### Security & Alert Policies in Office 365
-- Defender for Office 365 Alert Policies: 
-	- Identifies Exchange admin abuse, malware, insider threats.
-- Preset Security Policies:
-	- Use Standard/Strict to protect emails & content.
-	- Custom Policies? 
-		- Use Configuration Analyzer for comparison.
-- Review Alerts:
-	- Path: 
-		- Defender Portal → Policies & Rules > Alert Policy
-	- Some alerts trigger automated investigations.
-- Remediation Approval:
-	- Email-related remediation requires manual approval in Action Center.
+- **Functionality:**
+  - Mimics actions of security analysts to investigate and remediate threats across devices, emails, and identities.
 
-### Modifying Automated Investigation Settings
-- Change Device Automation Level:
-	- Defender Portal → Permissions > Endpoints roles & groups > Device groups
-	- Select group → Adjust Automation Level (Full recommended).
+**2. Prerequisites for Configuring AIR**
 
-📌  Source: [Configure automated investigation and response capabilities in Microsoft Defender XDR - Microsoft Defender XDR | Microsoft Learn](https://learn.microsoft.com/en-us/defender-xdr/m365d-configure-auto-investigation-response)
+- **Subscriptions:**
+  - Microsoft 365 E5, A5, E3 with E5 Security add-on, or equivalent. 
+
+- **Network Requirements:**
+  - Enable Microsoft Defender for Identity and configure Microsoft Defender for Cloud Apps. 
+
+- **Device Requirements:**
+  - Windows 10 version 1709 or later, with Microsoft Defender for Endpoint and Microsoft Defender Antivirus configured. 
+
+- **Permissions:**
+  - Assign Global Administrator or Security Administrator roles in Microsoft Entra ID or the Microsoft 365 admin center. 
+
+**3. Configuring Automation Levels for Device Groups**
+
+- **Steps:**
+  1. **Sign in** to the Microsoft Defender portal.
+  2. **Navigate** to `Settings` > `Endpoints` > `Device groups` under `Permissions`.
+  3. **Review** the `Remediation level` for each device group.
+  4. **Set** the automation level to `Full - remediate threats automatically` for optimal automated response.
+
+- **Recommendation:**
+  - Use the `Full` automation level to allow automatic remediation of threats. 
+
+**4. Reviewing Security and Alert Policies in Office 365**
+
+- **Purpose:**
+  - Ensure built-in alert policies are active to detect risks like malware activity and potential threats.
+
+- **Steps:**
+  1. **Access** the Microsoft 365 Defender portal.
+  2. **Navigate** to `Settings` > `Email & collaboration` > `Policies & rules` > `Threat policies`.
+  3. **Review** and **enable** relevant alert policies to support automated investigations.
+
+**5. Managing Remediation Actions**
+
+- **Action Center:**
+  - Monitor and manage remediation actions identified during automated investigations.
+
+- **Steps:**
+  1. **Go to** the `Action center` in the Microsoft Defender portal.
+  2. **Review** pending and completed actions.
+  3. **Approve** or **reject** pending actions as necessary.
+
+- **Recommendation:**
+  - Regularly review the Action center to stay informed about remediation activities. 
+
+**6. Best Practices**
+
+- **Regular Reviews:**
+  - Periodically assess automation levels and alert policies to ensure they align with organizational security requirements.
+
+- **Role Assignment:**
+  - Assign appropriate roles to personnel to balance security and operational efficiency.
+
+- **Stay Updated:**
+  - Keep abreast of updates to Microsoft Defender XDR features to leverage new AIR capabilities.
+
+📌  Source: [Configure automated investigation and response capabilities in Microsoft Defender XDR](https://learn.microsoft.com/en-us/defender-xdr/m365d-configure-auto-investigation-response)
 
 ---
 ## Configure automatic attack disruption in Microsoft Defender XDR
 
-### Prerequisites
-- Roles Required: 
-	- Global Administrator or Security Administrator (Microsoft Entra ID/Microsoft 365 Admin Center).
-- Permissions Needed: 
-	- Review, approve, or reject automated containment actions in Action Center.
+**1. Overview**
 
-### Microsoft Defender for Endpoint Requirements
-- Automation Level Settings:
-	- Path: 
-		- Defender Portal → System > Settings > Endpoints > Device Groups.
-	- Recommended Setting: 
-		- Full - remediate threats automatically.
-	- Semi-Automation: 
-		- Allows attack disruption without manual approval.
-	- No Automated Response: 
-		- Excludes specific devices (not recommended).
+- **Purpose:** Contain active attacks, limit impact, and provide security teams with more time to remediate threats. 
 
-### Device Discovery Configuration
-- Minimum Setting: 
-	- Standard Discovery (Configure via Set up device discovery).
-- Works Regardless of Defender AV Mode: 
-	- Active, Passive, or EDR Block Mode.
+- **Scope:** Utilizes XDR signals across Defender products to act at the incident level, differing from single-indicator protection methods.
 
-### Microsoft Defender for Identity Requirements
-- Audit Policies on Domain Controllers: 
-	- Configure Windows event logs for required audit events.
-- Validate Action Accounts:
-	- Defender for Identity impersonates LocalSystem by default.
-	- Ensure required permissions are set if using a different account.
-- Automation Conflict Check: 
-	- Prevent external automation from reactivating disrupted accounts.
-- Sensor Deployment: 
-	- Must be installed on the domain controller managing the affected AD account.
+**2. Prerequisites**
 
-### Microsoft Defender for Cloud Apps Requirements
-- Microsoft 365 Connector: 
-	- Defender for Cloud Apps must be connected to Microsoft 365.
-- App Governance: 
-	- Must be enabled (refer to app governance documentation). 
+- **Subscriptions:** Microsoft 365 E5/A5, Microsoft 365 E3 with E5 Security add-on, or equivalent. 
 
-### Microsoft Defender for Office 365 Requirements
-- Mailboxes: 
-	- Must be hosted in Exchange Online.
-- Mailbox Audit Logging: 
-	- Must track at least:
-		- MailItemsAccessed, UpdateInboxRules, MoveToDeletedItems, SoftDelete, HardDelete.
-		- (See Manage mailbox auditing for details).
-- Safe Links Policy: 
-	- Must be configured.    
+- **Deployment:**
+  - Deploy Defender products (Endpoint, Identity, Cloud Apps, Office 365) for comprehensive coverage.
+  - Set Microsoft Defender for Endpoint's device discovery to 'Standard Discovery'.
 
-📌  Source: [Configure automatic attack disruption in Microsoft Defender XDR - Microsoft Defender XDR | Microsoft Learn](https://learn.microsoft.com/en-us/defender-xdr/configure-attack-disruption)
+- **Permissions:** Global Administrator or Security Administrator roles required.
+
+- **Device Requirements:** Microsoft Defender Antivirus in Active, Passive, or EDR Block Mode; minimum Sense Agent version v10.8470.
+
+**3. Configuration Steps**
+
+1. **Sign In:**
+   - Access the Microsoft Defender portal.
+
+2. **Set Automation Level:**
+   - Navigate to `Settings` > `Endpoints` > `Device groups`.
+   - Review the `Remediation level`; set to `Full - remediate threats automatically` for comprehensive automation. 
+
+3. **Configure Device Discovery:**
+   - Ensure device discovery is set to 'Standard Discovery' to enable automatic containment actions. 
+
+**4. Managing Exclusions**
+
+- **Exclude User Accounts from Automated Responses:**
+  1. In the Defender portal, go to `Settings` > `Microsoft Defender XDR` > `Identities`.
+  2. Under `Automated response exclusions`, select `Add user exclusion`.
+  3. Choose user accounts to exclude and save changes. 
+
+- **Exclude IP Addresses (Preview):**
+  - Exclude specific IPs from automated containment actions by configuring exclusions in the Defender portal. 
+
+**5. Reviewing and Managing Actions**
+
+- **Incident Review:**
+  - In the Defender portal, navigate to `Incidents`.
+  - Select incidents tagged with 'Attack Disruption' to view the incident graph and assess impact.
+
+- **Action Center:**
+  - Go to `Actions & submissions` > `Action center` to view and manage remediation actions.
+
+**6. Best Practices**
+
+- **Regularly Review Settings:**
+  - Ensure automation levels and exclusions align with organizational security policies.
+
+- **Stay Informed:**
+  - Keep abreast of new features and updates in Microsoft Defender XDR to enhance security measures.
+
+📌  Source: [Configure automatic attack disruption in Microsoft Defender XDR](https://learn.microsoft.com/en-us/defender-xdr/configure-attack-disruption)
 
 ---
 # Manage assets and environments
