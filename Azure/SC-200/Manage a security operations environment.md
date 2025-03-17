@@ -319,696 +319,537 @@ For detailed information on each feature and its configuration, refer to Microso
 
 ## Configure and manage device groups, permissions, and automation levels in Microsoft Defender for Endpoint
 
-### Configure & Manage Device Groups
-- Purpose: 
-	- Group devices for role-based access control (RBAC), auto-remediation, and filtered investigations.
-- Key Actions:
-	- Create Device Group:
-		- Go to Settings > Endpoints > Permissions > Device Groups.
-		- Click Add device group, name it, and set automation level.
-		- Define matching rules (device name, domain, OS, tags).
-		- Assign Microsoft Entra user groups for access.
-	- Manage Device Groups:
-		- Rank priority (1 = highest).
-		- Unmatched devices go to Ungrouped Devices (default).
-		- Edit/Delete groups (note: deleting may affect notification rules).
-	- Best Practices:
-		- Use tagging for easier management.
-		- Assign groups granularly to limit access.
+**1. Device Groups**
+- **Purpose:** Group devices by logical categories for targeted policies and actions.
+- **Steps to Create a Device Group:**
+  - Navigate to `Settings` > `Endpoints` > `Device Groups`.
+  - Click `Add` to create a new group, assign a name, and define membership rules.
+  - Assign group members based on criteria (e.g., device OS, tags, etc.).
+- **Best Practices:**
+  - Use groups to apply specific policies (e.g., antivirus settings, detection rules).
+  - Regularly review group memberships to ensure relevance.
 
-📌 Source: [Create and manage device groups in Microsoft Defender for Endpoint - Microsoft Defender for Endpoint | Microsoft Learn](https://learn.microsoft.com/en-us/defender-endpoint/machine-groups)
+**2. User Roles**
+- **Purpose:** Manage access control to Defender for Endpoint features.
+- **Key Roles:**
+  - **Global Administrator:** Full access to all configurations and data.
+  - **Security Administrator:** Access to security-related settings and policies.
+  - **Security Reader:** View-only access to alerts, incidents, and reports.
+- **Assigning Roles:**
+  - Navigate to `Settings` > `Permissions` > `Roles`.
+  - Select a role and assign users or groups.
+- **Best Practices:**
+  - Follow the principle of least privilege to minimize exposure.
+  - Use predefined roles instead of creating custom roles unless absolutely necessary.
 
-### Role-Based Access Control (RBAC)
-- Why Use RBAC? 
-	- Limits user access to Defender data and actions.
-- Create RBAC Roles:
-	- Go to Settings > Endpoints > Roles.
-	- Click Add Role, define permissions (Security Ops, Vulnerability Mgmt, Live Response).
-	- Assign Microsoft Entra group to the role.
-- Permissions Breakdown:
-	- Security Ops: 
-		- View data, respond to threats.
-	- Defender Vulnerability Management: 
-		- Handle remediation, exceptions.
-	- Live Response:
-		- Basic: Read-only commands, file download.
-		- Advanced: Upload & execute scripts.
-- Editing/Deleting Roles:
-	- Edit via Settings > Endpoints > Roles.
-	- Delete roles via the dropdown menu.
-- Best Practice:
-	- Use least privilege (avoid Global Administrator unless necessary).
+**3. Automation Levels**
+- **Purpose:** Control the extent of automated actions Defender for Endpoint can take on detected threats.
+- **Automation Levels:**
+  - **None:** No automatic actions; manual remediation required.
+  - **Limited:** Automatic actions for certain cases (e.g., quarantining files).
+  - **Full:** Automated actions, including blocking threats and remediating issues.
+- **Steps to Configure Automation Levels:**
+  - Navigate to `Settings` > `Endpoints` > `Automated Investigation & Response`.
+  - Choose the automation level: None, Limited, or Full.
+  - Define which actions (quarantine, block, etc.) are allowed based on the level.
+- **Best Practices:**
+  - Set automation levels based on organization needs and risk tolerance.
+  - Regularly review and adjust automation settings to balance security and operational impact.
 
-📌 Source: [Create and manage roles for role-based access control - Microsoft Defender for Endpoint | Microsoft Learn](https://learn.microsoft.com/en-us/defender-endpoint/user-roles)
-  
-### Automation Levels in Defender for Endpoint
-- Purpose: 
-	- Controls automated threat remediation in AIR (Automated Investigation & Remediation).
-- Levels of Automation:
-	- Full Automation (Recommended):
-		- Automatically remediates malicious artifacts.
-		- Best for efficiency & security.
-	- Semi-Automation:
-		- Approval needed for remediation in certain locations.
-		- Variants:
-			- All folders: 
-				- Requires approval for all files.
-			- Core folders: 
-				- Only system-critical locations need approval.
-			- Non-temp folders: 
-				- Excludes temporary locations.
-	- No Automation:
-		- No automated remediation or investigation (not recommended).
-- Key Notes:
-	- Full automation removes 40% more threats than semi-automation.
-	- Defender for Business uses Full Automation by default.
-	- View all remediation actions in Action Center.
-	- Changes take effect instantly after updating settings.
-
-📌 Source: [Automation levels in automated investigation and remediation - Microsoft Defender for Endpoint | Microsoft Learn](https://learn.microsoft.com/en-us/defender-endpoint/automation-levels)  
+📌 Source: 
+- [Create and manage device groups in Microsoft Defender for Endpoint](https://learn.microsoft.com/en-us/defender-endpoint/machine-groups)
+- [Create and manage roles for role-based access control](https://learn.microsoft.com/en-us/defender-endpoint/user-roles)
+- [Automation levels in automated investigation and remediation](https://learn.microsoft.com/en-us/defender-endpoint/automation-levels)  
 
 ---
 ## Identify unmanaged devices in Microsoft Defender for Endpoint
 
-### Overview
-- Device discovery in Microsoft Defender for Endpoint (MDE) identifies unmanaged devices in the network.
-- Helps secure endpoints, network devices, and IoT assets by onboarding them to Defender for Endpoint.
+**Purpose:** Detect devices connected to your network that are not protected by Defender for Endpoint.
 
-### Discovery Modes
-- Basic Discovery (Passive)
-	- Uses SenseNDR.exe to collect network traffic data.
-	- Limited visibility—only detects devices seen in existing network traffic.
-- Standard Discovery (Active) – Recommended
-	- Uses multicast queries and active probing to find more devices.
-	- Provides enriched device information.
-	- Default mode since July 19, 2021.
+**Discovery Methods:**
+  - **Basic Discovery:**
+    - Endpoints passively collect network events to extract device information without initiating network traffic.
+    - Provides limited visibility of unmanaged devices.
+  - **Standard Discovery (Recommended):**
+    - Endpoints actively probe the network using multicast queries to enrich device data.
+    - Offers a comprehensive and reliable device inventory.
 
-### Device Inventory & Onboarding Status
-- Onboarded: 
-	- Device is managed by Defender for Endpoint.
-- Can be onboarded: 
-	- Detected and supported but not yet onboarded.
-- Unsupported: 
-	- Detected but not supported by Defender for Endpoint.
-- Insufficient info: 
-	- Requires standard discovery for more details.
+**Device Inventory:**
+  - Discovered devices are categorized based on their onboarding status:
+    - **Onboarded:** Devices currently protected by Defender for Endpoint.
+    - **Can be onboarded:** Devices identified as suitable for onboarding but not yet protected.
+    - **Unsupported:** Devices not compatible with Defender for Endpoint.
 
-### Network Device Discovery
-- Uses authenticated remote scans (agentless) via Defender for Endpoint sensors.
-- Discovers routers, switches, firewalls, WLAN controllers, VPN gateways.
-
-### Advanced Hunting for Unmanaged Devices
-- Find discovered devices
-
-```
-DeviceInfo
-| summarize arg_max(Timestamp, *) by DeviceId  
-| where isempty(MergedToDeviceId)  
-| where OnboardingStatus != "Onboarded"
-```
+**Recommended Actions:**
+  - Onboard devices listed under "Can be onboarded" to enhance network security.
+  - Regularly review and update device discovery settings to maintain an accurate inventory.
   
-- Identify which onboarded device detected them
-
-```
-DeviceInfo
-| where OnboardingStatus != "Onboarded"
-| summarize arg_max(Timestamp, *) by DeviceId  
-| where isempty(MergedToDeviceId)  
-| limit 100  
-| invoke SeenBy()  
-| project DeviceId, DeviceName, DeviceType, SeenBy
-```
-
-- Analyze network connections from non-onboarded devices
-
-```
-DeviceNetworkEvents
-| where ActionType == "ConnectionAcknowledged" or ActionType == "ConnectionAttempt"
-| take 10
-```
-
-### Defender for IoT Integration
-- Extends discovery to OT and Enterprise IoT devices (e.g., VoIP, printers, smart TVs).
-- Works via Microsoft Defender for IoT in Defender portal.
-
-### Security Recommendations & Vulnerability Management
-- Found under Defender Vulnerability Management > Security Recommendations.
-- Helps prioritize onboarding and securing high-risk unmanaged devices.
-  
-📌 Source: [Device discovery overview - Microsoft Defender for Endpoint | Microsoft Learn](https://learn.microsoft.com/en-us/defender-endpoint/device-discovery)
+📌 Source: [Device discovery overview - Microsoft Defender for Endpoint](https://learn.microsoft.com/en-us/defender-endpoint/device-discovery)
 
 ---  
 ## Discover unprotected resources by using Defender for Cloud
 
-### Key Concepts:
-- Unprotected Resources: 
-	- Resources without appropriate security settings or protection.
-- Defender for Cloud Recommendations: 
-	- Suggestions to secure unprotected resources.
-- Security Alerts: 
-	- Notifications about unprotected or misconfigured resources.  
+**Purpose:** Identify and secure resources lacking adequate protection within your Azure environment.
 
-### Steps to Discover Unprotected Resources:
-1. Enable Defender for Cloud: Activate in the Azure Portal for resource monitoring.
-2. Review Security Alerts: Identify flagged resources with missing protections.
-3. Review Security Recommendations: Implement actionable steps to secure resources.
+**Key Components:**
+  - **Azure Resource Manager (ARM):** Centralized management layer for deploying, managing, and organizing Azure resources.
+  - **Azure Arc:** Extends Azure management capabilities to on-premises and multicloud environments, allowing consistent management of resources outside Azure.
+  - **Microsoft Defender for Cloud:** Provides security posture management and threat protection across Azure, on-premises, and multicloud environments.
 
-### Best Practices:
-- Regularly monitor Security Alerts for new vulnerabilities.
-- Apply recommended policies to secure resources.
-- Use tags for better resource classification.
+**Steps to Discover Unprotected Resources:**
+  1. **Enable Defender for Cloud:**
+     - Navigate to the Azure portal.
+     - Go to `Microsoft Defender for Cloud` and enable it for your subscriptions.
+  2. **Review Security Recommendations:**
+     - In Defender for Cloud, access the `Recommendations` section.
+     - Identify resources marked with security vulnerabilities or lacking protection.
+  3. **Assess Secure Score:**
+     - Monitor the `Secure Score` to evaluate your current security posture.
+     - A higher score indicates better security practices; prioritize improving areas with lower scores.
+  4. **Implement Remediation Steps:**
+     - For each recommendation, select `Take action` and follow the guided remediation steps.
+     - Apply security controls as advised to protect unprotected resources.
 
-### Important Tools:
-- Azure Arc: 
-	- Extends coverage to non-Azure resources.
-- RBAC: 
-	- Ensures proper permissions for resource management.
-
-### Critical Functions:
-- CSPM (Cloud Security Posture Management): 
-	- Tracks multi-cloud security.
-- Resource Inventory: 
-	- Discovers and tracks unprotected resources.
-
-### Actionable Steps:
-- Enable Defender for Cloud to start discovery.
-- Use Azure Arc for non-Azure resources.
-- Review Secure Score to assess environment security.
+**Best Practices:**
+  - **Regular Monitoring:** Consistently review Defender for Cloud dashboards to stay informed about security status.
+  - **Automation:** Utilize automated workflows to remediate common security issues promptly.
+  - **Integration:** Incorporate Defender for Cloud with Azure Arc to manage and secure resources across hybrid and multicloud environments.
 
 📌 Source:
-- [What is Azure Resource Manager? - Azure Resource Manager | Microsoft Learn](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview)
-- [Azure Arc overview - Azure Arc | Microsoft Learn](https://learn.microsoft.com/en-us/azure/azure-arc/overview)
-- [Microsoft Defender for Cloud Overview - Microsoft Defender for Cloud | Microsoft Learn](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-cloud-introduction)
+- [What is Azure Resource Manager? - Azure Resource Manager](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview)
+- [Azure Arc overview - Azure Arc](https://learn.microsoft.com/en-us/azure/azure-arc/overview)
+- [Microsoft Defender for Cloud Overview - Microsoft Defender for Cloud](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-cloud-introduction)
 
 ---
 ## Identify and remediate devices at risk by using Microsoft Defender Vulnerability Management
 
-### High-Level Overview:
-- Purpose: 
-	- Identify, assess, and remediate vulnerabilities across critical assets to reduce cyber risk.
-- Key Features: 
-	- Asset visibility, intelligent risk prioritization, built-in remediation tools, cross-platform support (Windows, macOS, Linux, Android, iOS, network devices).
-- Core Goals: 
-	- Prioritize vulnerabilities, provide mitigation strategies, and track remediation efforts.
+**Purpose:** Detect, assess, and mitigate vulnerabilities across various devices to enhance organizational security.
 
-### Key Components:
-- Asset Discovery & Monitoring:
-	- Continuous scanning of devices, even offline.
-	- Centralized view of software, certificates, hardware, firmware, and browser extensions.
-	- Identify unmanaged devices through authenticated scans (e.g., for Windows).
-- Vulnerability Assessment Tools:
-	- Security Baselines: 
-		- Measure compliance against benchmarks (CIS, STIG).
-	- Software Inventory: 
-		- Track software changes (installations, uninstalls, patches).
-	- Network Shares: 
-		- Assess internal network share configurations.
-	- Event Timelines: 
-		- Use timelines for vulnerability tracking and prioritization.
-- Risk-based Prioritization:
-	- Leverage Microsoft threat intelligence and breach likelihood.
-	- Focus on high-risk, actively exploited vulnerabilities.
-	- Pinpoint vulnerabilities tied to critical assets (e.g., business-critical applications).
+**Key Features:**
+  - **Continuous Asset Discovery and Monitoring:**
+    - Utilizes built-in and agentless scanners for real-time monitoring, even for devices not connected to the corporate network.
+    - Provides consolidated inventories of software applications, digital certificates, hardware, firmware, and browser extensions.
+  - **Advanced Vulnerability and Configuration Assessment:**
+    - Offers security baselines assessment against benchmarks like CIS and STIG.
+    - Assesses software inventories, network share configurations, browser extensions, digital certificates, and hardware/firmware vulnerabilities.
+  - **Risk-Based Intelligent Prioritization:**
+    - Leverages Microsoft's threat intelligence and breach likelihood predictions to prioritize vulnerabilities.
+    - Provides a unified view of prioritized recommendations with details such as related CVEs and affected devices.
 
-### Remediation & Tracking:
-- Built-in Workflows:
-	- Create remediation tasks in Microsoft Intune.
-	- Block vulnerable applications on specific devices.
-	- Track remediation progress in real time.
-- Remediation Strategies:
-	- Actionable security recommendations (e.g., patches, configuration changes).
-	- Alternative mitigations for vulnerabilities when direct patching isn't possible.
+**Remediation Process:**
+  1. **Access Security Recommendations:**
+     - Navigate to the Microsoft 365 Defender portal.
+     - Select 'Vulnerabilities' under 'Threat & Vulnerability Management'.
+  2. **Review and Prioritize:**
+     - Examine the list of security recommendations.
+     - Focus on high-risk vulnerabilities affecting critical assets.
+  3. **Initiate Remediation:**
+     - For each recommendation, choose 'Open ticket' to create a remediation task.
+     - Assign tasks to the appropriate IT personnel or teams.
+  4. **Monitor Progress:**
+     - Track remediation activities and verify the implementation of security measures.
 
-### Navigation & Reporting:
-- Dashboard: 
-	- View risk scores, recommendations, top vulnerabilities, and remediation activities.
-- Recommendations: 
-	- Lists of security issues, with links to remediation options.
-- Inventories & Weaknesses: 
-	- Access asset lists and common vulnerabilities (CVE tracking).
-- APIs: 
-	- Automate workflows with Defender for Endpoint APIs for vulnerabilities, recommendations, and machine data.
-
-### Best Practices:
-- Prioritize vulnerabilities based on exposure and criticality.
-- Regularly assess devices, even when offline, to maintain up-to-date visibility.
-- Use real-time monitoring to track and ensure successful remediation.
+**Integration with Microsoft Intune:**
+  - Integrate with Microsoft Intune to manage remediation tasks directly.
+  - Security tasks from Defender are visible in the Intune admin center for action.
+  - After remediation, update the task status to reflect completion.
   
-📌 Source: [Microsoft Defender Vulnerability Management - Microsoft Defender Vulnerability Management | Microsoft Learn](https://learn.microsoft.com/en-us/defender-vulnerability-management/defender-vulnerability-management)
+📌 Source: [Microsoft Defender Vulnerability Management - Microsoft Defender Vulnerability Management](https://learn.microsoft.com/en-us/defender-vulnerability-management/defender-vulnerability-management)
 
 ---
 ## Mitigate risk by using Exposure Management in Microsoft Defender XDR
 
-### High-Level Overview:
-- Purpose: 
-	- Provides a unified view of organizational security posture and attack surface to proactively manage and mitigate exposure risks.
-- Core Functions: 
-	- Asset discovery, attack surface management, exposure insights, risk mitigation, and attack path simulation.  
+**Purpose:**  
+  - Proactively identify and reduce security exposure by assessing risks and attack surfaces.
 
-### Key Features:
-- Unified View: 
-	- Continuously discovers assets and workloads, creating an up-to-date inventory and attack surface.
-- Attack Surface Management:
-	- Visualize and analyze attack surfaces across on-premises, hybrid, and multicloud environments.
-	- Use the enterprise exposure graph to query and assess risk.
-	- Attack surface map for visualizing security posture.
-- Critical Asset Management:
-	- Mark assets as critical for focused security efforts.
-	- Prioritize and safeguard critical assets for business continuity.
-- Exposure Insights:
-	- Aggregate security posture data for actionable insights.
-	- Includes security events, recommendations, and metrics.
-	- Insights help prioritize security efforts and investments.
+**Key Features:**  
+  - **Attack Surface Visibility:** Provides real-time insight into exploitable attack vectors.  
+  - **Risk-Based Prioritization:** Uses threat intelligence to rank risks based on exploitability and impact.  
+  - **Proactive Security Planning:** Aligns security efforts with evolving attack techniques.  
 
-### Risk Mitigation:
-- Attack Path Simulation:
-	- Generate attack paths based on asset and workload data.
-	- Simulate attack scenarios and identify exploitable weaknesses.
-	- Focus on choke points that may amplify threats.
-- Actionable Recommendations:
-	- Use insights and recommendations to mitigate attack paths.
-	- Focus on actionable steps to reduce exposure risks.  
+**Core Components:**  
+  1. **Continuous Exposure Assessment:**  
+     - Identifies misconfigurations, vulnerable software, and potential attack paths.  
+  2. **Threat Intelligence Integration:**  
+     - Maps real-world attack data to internal security posture.  
+  3. **Security Score and Insights:**  
+     - Provides exposure scores to measure security posture improvements.  
 
-### Data Integration:
-- Data Connectors:
-	- Integrate data from multiple sources into a unified view.
-	- Gain deeper security insights by consolidating data from various environments.
+**Mitigation Process:**  
+  1. **Access Security Exposure Management:**  
+     - Go to Microsoft 365 Defender > **Exposure Management** Dashboard.  
+  2. **Analyze Exposure Score & Security Recommendations:**  
+     - Review attack surface insights and recommended actions.  
+  3. **Prioritize and Implement Fixes:**  
+     - Apply security controls to high-risk areas first.  
+  4. **Monitor and Improve Security Posture:**  
+     - Continuously assess exposure levels and adapt defenses.  
 
-### Best Practices:
-- Continuously monitor and update asset inventory to keep exposure data current.
-- Leverage the enterprise exposure graph for comprehensive risk analysis.
-- Prioritize remediation based on attack paths and critical asset visibility.  
+**Benefits:**  
+  - Reduces attack surface and enhances organizational resilience.  
+  - Enables proactive security rather than reactive response.  
 
-📌 Source: [What is Microsoft Security Exposure Management? - Microsoft Security Exposure Management | Microsoft Learn](https://learn.microsoft.com/en-us/security-exposure-management/microsoft-security-exposure-management)
+📌 Source: [What is Microsoft Security Exposure Management? - Microsoft Security Exposure Management](https://learn.microsoft.com/en-us/security-exposure-management/microsoft-security-exposure-management)
 
 ---
 # Design and configure a Microsoft Sentinel workspace
 
 ## Plan a Microsoft Sentinel workspace
 
-### Plan & Prepare
-- Prerequisites: Ensure Azure tenant readiness.
-- Workspace Architecture:
-	- Choose single vs. multiple tenants based on compliance, data control, and access.
-	- Review workspace design guides and multiple workspace setups.
-- Data Connectors:
-	- Identify key data sources & estimate ingestion size.
-	- Prioritize based on security needs & SIEM evaluation.
-- Roles & Permissions:
-	- Use Azure RBAC to assign fine-grained access.
-	- Apply roles at workspace, resource group, or subscription level.
-- Cost Planning:
-	- Budget for Log Analytics ingestion, playbooks, automation.
+**Purpose:**  
+  - Microsoft Sentinel is a cloud-native SIEM/SOAR solution for threat detection, investigation, and response.
 
-### Deployment
-- Enable Microsoft Sentinel: Activate health & audit, content solutions.
-- Configure Security Content:
-	- Data connectors, analytics rules, automation rules, playbooks, workbooks, watchlists.
-- Multi-Workspace Setup: Extend Sentinel across workspaces/tenants if needed.
-- Enable UEBA: Use User & Entity Behavior Analytics for anomaly detection.
-- Data Retention: Configure short-term & long-term storage.
+**Key Planning Considerations:**  
+  - **Log Analytics Workspace:** Sentinel requires an Azure Log Analytics workspace to store data.  
+  - **Data Ingestion:** Connectors for Azure, Microsoft 365, and third-party sources.  
+  - **Geolocation:** Choose a region for compliance, performance, and cost optimization.  
+  - **Access Control:** Use Azure RBAC roles like **Reader**, **Responder**, and **Contributor**.  
+  - **Retention & Costs:** Adjust data retention settings to balance cost and compliance.  
 
-### Fine-Tuning & Review
-- Incident & Process Review: Validate incident accuracy, SOC workflow.
-- Analytics Rules: Tune rules, mitigate false positives.
-- Automation & Playbooks: Ensure correct response to alerts/incidents.
-- Watchlists: Keep updated with new users, use cases.
-- Commitment Tiers: Adjust to match data ingestion.
-- Cost Tracking: Use Sentinel Cost & Usage Reports.
-- Data Collection Rules (DCRs): Optimize ingestion & transformation.
-- MITRE ATT&CK Mapping: Validate coverage using Sentinel’s MITRE view.
-- Threat Hunting: Establish proactive detection processes.
+**Deployment Steps:**  
+  1. **Create a Log Analytics Workspace:**  
+     - In Azure Portal, go to **Log Analytics workspaces** > **Create workspace**.  
+  2. **Enable Microsoft Sentinel:**  
+     - In Azure Portal, search for **Microsoft Sentinel**, select workspace, and enable it.  
+  3. **Connect Data Sources:**  
+     - Add **Connectors** for logs (Azure, Office 365, Firewalls, Threat Intelligence, etc.).  
+  4. **Configure Analytics Rules:**  
+     - Define rules to detect threats using scheduled queries and machine learning.  
+  5. **Set Up Automation & Response:**  
+     - Use **Playbooks** (Azure Logic Apps) for automated incident response.  
 
-📌 Source: [Deployment guide for Microsoft Sentinel | Microsoft Learn](https://learn.microsoft.com/en-us/azure/sentinel/deploy-overview)
+**Best Practices:**  
+  - Centralize Sentinel in a dedicated subscription for better management.  
+  - Use multiple workspaces for multi-region or multi-tenant deployments.  
+  - Optimize query performance and cost by fine-tuning log retention.  
+
+📌 Source: [Deployment guide for Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/deploy-overview)
 
 ---
 ## Configure Microsoft Sentinel roles
 
-### Role-Based Access Control (RBAC) in Microsoft Sentinel  
-- Microsoft Sentinel uses Azure RBAC to manage permissions.  
-- Assign roles at resource group level for full Sentinel resource access or at workspace level (requires additional assignments).  
+**Purpose:**  
+  - Microsoft Sentinel uses **Azure Role-Based Access Control (RBAC)** for access management.
 
-### Built-in Microsoft Sentinel Roles  
-| Role                          | Key Permissions                                      |
-|--------------------------------|------------------------------------------------------|
-| Sentinel Reader            | View data, incidents, workbooks.                    |
-| Sentinel Responder         | Manage incidents (assign, dismiss, etc.).           |
-| Sentinel Contributor       | Install/update content, create/edit workbooks, analytics rules. |
-| Sentinel Playbook Operator | Run playbooks manually.                             |
-| Sentinel Automation Contributor | Allows Sentinel to run playbooks in automation rules. |
+**Built-in Roles:**  
+  1. **Microsoft Sentinel Reader** – View incidents, logs, and rules but no modifications.  
+  2. **Microsoft Sentinel Responder** – Investigate and update incidents but cannot modify analytics rules.  
+  3. **Microsoft Sentinel Contributor** – Full access to manage Sentinel except workspace settings.  
+  4. **Log Analytics Contributor** – Manage log analytics settings (needed for Sentinel configurations).  
+  5. **Azure Owner, Contributor, and Reader** – Control workspace and resource permissions.  
 
-### Other Related Roles  
-| Role                  | Purpose                                      |
-|-----------------------|----------------------------------------------|
-| Logic Apps Contributor  | Create, edit, and run playbooks.         |
-| Workbook Contributor    | Create and delete workbooks.             |
-| Azure Contributor       | Grants broad permissions across Azure, including Sentinel. |
+**Role Assignment Steps:**  
+  1. In **Azure Portal**, go to **Microsoft Sentinel**.  
+  2. Select **Settings** > **Access control (IAM)**.  
+  3. Click **Add role assignment**.  
+  4. Choose a **role** (e.g., Sentinel Contributor).  
+  5. Assign to **users, groups, or service principals**.  
+  6. Click **Save**.  
 
-### Role Assignment Best Practices  
-- Assign roles at the resource group level to cover all Sentinel-related resources.  
-- Use custom roles when built-in roles don’t meet specific needs.  
-- To grant playbook execution permissions, Sentinel needs the Automation Contributor role at the playbook’s resource group level.  
-- Guest users need Directory Reader + Sentinel Responder to assign incidents.  
-
-### Resource-Specific RBAC (Granular Access)  
-- Table-Level RBAC:
-	- Restrict access to specific data types.  
-- Resource-Context RBAC:
-	- Assign permissions based on the data users need, without full Sentinel access.  
+**Best Practices:**  
+  - **Principle of Least Privilege** – Assign only the necessary role for the task.  
+  - **Use Azure AD Groups** – Simplifies role management.  
+  - **Audit Role Changes** – Monitor role assignments via **Azure Monitor Logs**.  
 
 📌 Source: [Roles and permissions in Microsoft Sentinel | Microsoft Learn](https://learn.microsoft.com/en-us/azure/sentinel/roles)
 
 ---
 ## Specify Azure RBAC roles for Microsoft Sentinel configuration
 
-### Custom Roles & Advanced RBAC  
-- Custom Roles:
-	- Create Azure custom roles for Sentinel & Log Analytics permissions.  
-- Log Analytics RBAC:
-	- Use table-level RBAC and resource-context RBAC to restrict access to specific data without full Sentinel access.  
+**Custom Roles & Advanced RBAC:**  
+  - Microsoft Sentinel supports **custom roles** via Azure RBAC for granular access control.
+  - Use **JSON role definitions** to specify permissions.
 
-### Role Assignment Best Practices  
-| User Type             | Role | Resource Group | Permissions |
-|----------------------|------------------------------|-----------------------------|-------------------------------------------|
-| Security Analysts | Sentinel Responder | Sentinel RG | View & manage incidents. |
-|                      | Playbook Operator | Sentinel RG or Playbook RG | Attach & run playbooks. |
-| Security Engineers | Sentinel Contributor | Sentinel RG | Manage incidents, create/edit workbooks & analytics rules. |
-|                      | Logic Apps Contributor | Sentinel RG or Playbook RG | Modify & run playbooks. |
-| Service Principal | Sentinel Contributor | Sentinel RG | Automate Sentinel management tasks. |
+**Key Built-in Roles & Their Scope:**  
+  1. **Microsoft Sentinel Contributor** – Full Sentinel management except workspace settings.  
+  2. **Microsoft Sentinel Reader** – View-only access.  
+  3. **Microsoft Sentinel Responder** – Manage incidents but cannot edit analytics rules.  
 
-### Resource-Based Access Control  
-- Use resource-context RBAC for users needing access to specific data (e.g., Windows event logs).  
-- Instead of granting full Sentinel access, restrict access to only necessary resources.
+**Assigning a Custom Role:**
+  1. Navigate to **Azure Portal** > **Microsoft Sentinel**.
+  2. Open **Access Control (IAM)** > **Add Custom Role**.
+  3. Upload the **JSON definition** or create manually.
+  4. Assign to **users**, **groups**, or **service principals**.
 
-📌 Source: [Roles and permissions in Microsoft Sentinel | Microsoft Learn](https://learn.microsoft.com/en-us/azure/sentinel/roles#custom-roles-and-advanced-azure-rbac)
+**Best Practices:**
+  - Follow **least privilege** principles.
+  - Use **Azure AD groups** for role assignments.
+  - Regularly **audit permissions** via **Azure Monitor Logs**.
+
+📌 Source: [Roles and permissions in Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/roles#custom-roles-and-advanced-azure-rbac)
 
 ---
 ## Design and configure Microsoft Sentinel data storage, including log types and log retention 
 
-### Log Retention Overview  
-- Interactive Retention (default: 30 days, extendable to 730 days for Analytics tables).  
-- Long-term Retention (low-cost storage, up to 12 years, searchable via search jobs).  
-- Default Retention:  
-	- Most tables → 30 days interactive retention.  
-	- Log tables (e.g., Usage, AzureActivity) → 90 days free retention.  
+**Log Types in Microsoft Sentinel**
+- **Azure Monitor Logs**: Centralized log collection in Log Analytics workspace.
+- **Table Types**:
+  - **Analytics Logs**: Security events, alerts, and audit logs.
+  - **Basic Logs**: High-volume logs with limited query capabilities (cost-effective).
+  - **Archive Logs**: Retained for long-term storage, accessed via search.
 
-### Managing Data Retention  
-- Workspace-Level Retention (affects all Analytics tables unless overridden):  
-	- Modify via Portal → Usage & estimated costs → Data Retention → Adjust slider.  
-	- API: Set retention & enable `immediatePurgeDataOn30Days` for strict 30-day compliance.  
+**Configuring Log Retention**
+- **Retention Period**: Default **90 days**, configurable up to **730 days**.
+- **Archive Retention**: Retain logs beyond retention period for **7 years max**.
+- **Data Access**:
+  - Analytics Logs → Fully queryable.
+  - Archived Logs → Require **Search Jobs** to restore.
 
-- Table-Level Retention (custom per-table settings):  
-	- Portal: Log Analytics workspaces → Tables → Manage table.  
-	- Interactive: Set 4 - 730 days (Analytics tables).  
-	- Total: Up to 12 years (CLI/PowerShell currently supports only 7 years).  
+**Retention Configuration (Portal)**
+1. Go to **Azure Monitor** > **Log Analytics workspaces**.
+2. Select your **workspace**.
+3. Navigate to **Usage and estimated costs** > **Data retention**.
+4. Configure **default retention** or **per-table retention**.
 
-### Retention Modifications & Impact  
-- Shortening retention:
-	- 30-day grace period before deletion.  
-- Increasing retention:
-	- Applies immediately to existing & new data.  
-- Long-term retention activation:
-	- Interactive data transitions automatically.  
+**Best Practices**
+- **Use Tiered Storage**:
+  - **Short-term**: Analytics Logs.
+  - **Mid-term**: Archive Logs for compliance.
+  - **Long-term**: External storage (e.g., Azure Blob Storage).
+- **Monitor Costs**: Adjust retention based on query frequency and compliance.
+- **Security Considerations**:
+  - Implement **role-based access control (RBAC)**.
+  - Enable **Immutable Storage** for compliance.
 
-### Log Deletion & Special Table Handling  
-- Azure Tables:
-	- Cannot be deleted; stop data ingestion instead.  
-- Custom Log Tables (`_CL`):
-	- Soft-deleted until retention period expires.  
-- Search Results Tables (`_SRCH`):
-	- Deleted immediately when removed.  
-- Restored Tables (`_RST`):
-	- Cache removed, source data remains.  
-
-### Permissions for Managing Retention  
-| Action | Required Permission | Built-in Role |  
-|-----------|----------------------|------------------|  
-| Configure default retention | `Microsoft.OperationalInsights/workspaces/write` | Log Analytics Contributor |  
-| Get table retention settings | `Microsoft.OperationalInsights/workspaces/tables/read` | Log Analytics Reader |  
-
-### Pricing Considerations  
-- Retention costs depend on data volume (GB) × retention period (days).  
-- Log data with `_IsBillable == false` is not charged (e.g., some system logs).  
-
-📌 Source: [Roles and permissions in Microsoft Sentinel | Microsoft Learn](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/data-retention-configure?toc=%2Fazure%2Fsentinel%2FTOC.json&bc=%2Fazure%2Fsentinel%2Fbreadcrumb%2Ftoc.json&tabs=portal-3%2Cportal-1%2Cportal-2)
+📌 Source: [Roles and permissions in Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/data-retention-configure?toc=%2Fazure%2Fsentinel%2FTOC.json&bc=%2Fazure%2Fsentinel%2Fbreadcrumb%2Ftoc.json&tabs=portal-3%2Cportal-1%2Cportal-2)
 
 --- 
 # Ingest data sources in Microsoft Sentinel
 
 ## Identify data sources to be ingested for Microsoft Sentinel
 
-### Data Ingestion Overview  
-- Microsoft Sentinel uses data connectors to ingest security data from various sources.  
-- Types of connectors:  
-	- Built-in (Microsoft Services): Defender XDR (includes Office 365, Entra ID, Defender for Identity, Defender for Cloud Apps).  
-	- Third-Party & Custom: Syslog, CEF, REST API, Log Ingestion API, Azure Monitor Agent (AMA).  
+**Built-in Data Connectors**
+- **Microsoft Services**: Real-time integration with services like Office 365, Microsoft Entra ID, Microsoft Defender for Identity, and Microsoft Defender for Cloud Apps. 
+- **Third-Party Products**: Connect using Syslog, Common Event Format (CEF), or REST APIs. 
 
-### Microsoft Sentinel Solutions & Connectors  
-- Solutions:
-	- Pre-packaged security content (connectors, workbooks, analytics rules, playbooks).  
-- Installed connectors:
-	- View in Microsoft Sentinel > Data Connectors page.  
-- To add new connectors:
-	- Install solutions from the Content Hub.  
+**Agent-Based Integration**
+- **Azure Monitor Agent (AMA)**: Collects data from any source capable of real-time log streaming, especially on-premises data sources. 
+- **Syslog and CEF**: Stream events from Linux-based, Syslog-supporting devices using AMA. 
 
-### Custom Data Connectors  
-- Use when no built-in solution exists.  
-- Methods:  
-	- Codeless Connector Platform (for APIs).  
-	- Log Ingestion API (via Azure Function/Logic App).  
-	- Azure Monitor Agent (AMA) or Logstash.  
+**Custom Data Connectors**
+- **Codeless Connector Platform**: Configure data source APIs without coding. 
+- **Log Ingestion API**: Use with Azure Functions or Logic Apps for custom integrations. 
+- **Logstash**: Utilize the Logstash output plugin for Microsoft Sentinel to create custom connectors. 
 
-### Agent-Based Integration  
-- Syslog & CEF (Linux-based sources):  
-	- Install Azure Monitor Agent (AMA) on a log forwarder or directly on the source.  
-	- Syslog events → Syslog table, CEF events → CommonSecurityLog table.  
-- Custom Logs: Log Analytics custom log agent for Windows/Linux file-based ingestion.  
+**Free Data Sources**
+- **Azure Activity Logs**: No ingestion charges. 
+- **Office 365 Audit Logs**: Includes SharePoint activity, Exchange admin activity, and Teams. 
+- **Security Alerts**: From services like Microsoft Defender for Cloud, Microsoft 365 Defender, and Microsoft Defender for Endpoint. 
 
-### Service-to-Service Integrations  
-- Native integration for Microsoft services (Azure, Windows, Defender) & AWS.  
-- Configuration:
-	- Follow setup instructions on each Microsoft Sentinel data connector page.  
+**Best Practices**
+- **Assess Data Sources**: Identify relevant sources to monitor security events effectively.
+- **Utilize Built-in Connectors**: Leverage existing connectors for seamless integration.
+- **Implement Custom Connectors**: Develop custom integrations when necessary.
+- **Monitor Ingestion Costs**: Be aware of which data sources are free and which incur charges. 
 
-### Support Types for Data Connectors  
-| Type | Description | Support Provided By |  
-|---------|---------------|--------------------|  
-| Microsoft-Supported | Microsoft-authored connectors for first-party & some third-party sources. | Microsoft Azure Support Plans |  
-| Partner-Supported | Third-party vendor connectors. | Vendor/MSSP/SI support |  
-| Community-Supported | Open-source/community-created connectors. | Microsoft Sentinel GitHub Community |  
-
-📌 Source: [Microsoft Sentinel data connectors | Microsoft  Learn](https://learn.microsoft.com/en-us/azure/sentinel/connect-data-sources?tabs=azure-portal)
+📌 Source: [Microsoft Sentinel data connectors](https://learn.microsoft.com/en-us/azure/sentinel/connect-data-sources?tabs=azure-portal)
 
 ---
 ## Implement and use Content hub solutions
 
-### Overview
-- Centralized platform to discover, install, and manage built-in security solutions.
-- Includes prepackaged solutions and standalone content (rules, playbooks, workbooks, queries).
-- Requires Microsoft Sentinel Contributor role at the resource group level.
+**Overview:**
+- The Microsoft Sentinel Content Hub is a centralized platform to discover, deploy, and manage out-of-the-box (OOTB) security content, including solutions tailored for specific products, domains, or industries. 
 
-### Discover Content
-- Navigate to Content hub via:
-	- Azure portal: Content management > Content hub
-	- Defender portal: Microsoft Sentinel > Content management > Content hub
-- Use filters: status, content type, support, provider, category.
-- Search supports fuzzy matching & AI-driven queries.
+**Key Concepts:**
+- **Solutions:** Packaged integrations delivering end-to-end value, encompassing data connectors, workbooks, analytics rules, playbooks, and more.
+- **Standalone Content:** Individual components like analytics rules or workbooks that can be deployed separately.
 
-### Install & Update Solutions
-- Install content individually or in bulk.
-- Steps:
-  1. Locate solution in Content hub.
-  2. Select View details > Create/Update.
-  3. Provide Subscription, Resource Group, Workspace.
-  4. Complete configuration steps per content type.
-  5. Review + Create and validate before deployment.
-  6. If dependencies exist, select Install with dependencies.
-  7. Post-installation, configure additional content if required.
+**Best Practices:**
+- **Discovery:** Utilize the Content Hub's filtering and search capabilities to find relevant solutions or content items.
+- **Installation:** Ensure you have the Microsoft Sentinel Contributor role at the resource group level to install or update content.
+- **Management:** Regularly check for updates to installed solutions and apply them to maintain optimal functionality.
+- **Customization:** Tailor deployed content to align with your organization's specific security requirements.
 
-### Bulk Install & Updates
-- Switch to List View.
-- Select multiple solutions/content items.
-- Click Install/Update.
-- Standalone content updates automatically.
+**Steps to Implement a Solution:**
+1. **Access Content Hub:**
+   - Navigate to Microsoft Sentinel in the Azure portal.
+   - Select 'Content Management' > 'Content Hub'.
+2. **Discover Solutions:**
+   - Use filters or search to locate desired solutions.
+3. **Install Solution:**
+   - Select the solution and click 'Install/Update'.
+   - Follow on-screen prompts to complete the installation.
+4. **Configure Data Connectors:**
+   - Post-installation, set up associated data connectors to start data ingestion.
+5. **Monitor and Update:**
+   - Regularly monitor the Content Hub for updates to installed solutions and apply them as needed.
 
-### Enable & Manage Installed Content
-- Data Connectors
-	- Navigate to the Connector page.
-	- Complete setup; status changes from Disconnected → Connected.
-- Analytics Rules
-	- View in Analytics template gallery.
-	- Select Create rule (if not yet created) or Edit existing rule.
-	- Active rules are listed under Content created.
-- Hunting Queries
-	- Select Run query for immediate results.
-	- Clone and modify query via Hunting gallery.
-- Workbooks
-	- Select View template > Save to create an instance.
-	- View saved workbooks under Created content.
-- Parsers
-	- Installed as workspace functions.
-	- Open Log Analytics > Load function code > Use in editor.
-- Playbooks
-	- Select playbook template > Create playbook.
-	- Manage active playbooks under Created content.
-
-### Support Model
-- Located in the Support box on the solution's detail pane.
-- Additional details (Publisher, Provider, Plan ID) under Usage information & support.
-
-📌 Source: [Discover and deploy Microsoft Sentinel out-of-the-box content from Content hub | Microsoft Learn](https://learn.microsoft.com/en-us/azure/sentinel/sentinel-solutions-deploy?tabs=azure-portal)
+📌 Source: [Discover and deploy Microsoft Sentinel out-of-the-box content from Content hub](https://learn.microsoft.com/en-us/azure/sentinel/sentinel-solutions-deploy?tabs=azure-portal)
 
 ---
 ## Configure and use Microsoft connectors for Azure resources, including Azure Policy and diagnostic settings
 
-### Overview
-- Objective: Integrate Azure services with Microsoft Sentinel using diagnostic settings and Azure Policy.
+**Overview:**
+- **Microsoft Sentinel** integrates with Azure resources through connectors to collect and analyze data.
 
-### Key Concepts
-- Diagnostic Settings: Configure Azure resources to send logs and metrics to destinations like Log Analytics, Event Hubs, or Storage Accounts.
-- Azure Policy: Automate the application of diagnostic settings across multiple resources for consistent monitoring.
+**Key Connector Types:**
+1. **Diagnostic Settings-Based Connectors:**
+   - **Standalone Connections:**
+     - **Purpose:** Collect logs and metrics from Azure resources.
+     - **Configuration Steps:**
+       1. Navigate to the desired Azure resource.
+       2. Select **Diagnostic settings**.
+       3. Add a new diagnostic setting, specifying Microsoft Sentinel as the destination.
+   - **Policy-Managed Connections:**
+     - **Purpose:** Apply diagnostic settings across multiple resources using Azure Policy.
+     - **Configuration Steps:**
+       1. Create a custom policy definition to enable diagnostic settings for specific resource types.
+       2. Assign the policy to the appropriate scope (e.g., subscription, resource group).
+       3. Monitor compliance and ensure logs are sent to Microsoft Sentinel.
 
-### Configuring Diagnostic Settings for Individual Resources
-1. Navigate to Resource:
-   - Go to the Azure portal.
-   - Select the resource (e.g., Azure Activity) you want to monitor.
-2. Access Diagnostic Settings:
-   - In the resource's menu, click on 'Diagnostic settings'.
-3. Add Diagnostic Setting:
-   - Click '+ Add diagnostic setting'.
-   - Provide a name for the setting.
-4. Select Logs and Metrics:
-   - Choose the log categories and metrics to collect.
-5. Choose Destination:
-   - Select 'Send to Log Analytics workspace'.
-   - Specify the target Log Analytics workspace.
-6. Save Configuration:
-   - Click 'Save' to apply the settings.
+**Best Practices:**
+- **Role-Based Access Control (RBAC):** Assign appropriate roles to users managing connectors to ensure proper permissions.
+- **Regular Audits:** Periodically review connector configurations and data flow to maintain security and compliance.
+- **Documentation:** Keep detailed records of connector setups for troubleshooting and auditing purposes.
 
-### Automating Diagnostic Settings with Azure Policy
-1. Access Data Connectors:
-   - In Microsoft Sentinel, go to 'Data connectors'.
-2. Select Resource Type:
-   - Choose the resource type (e.g., Azure Activity) from the gallery.
-3. Launch Azure Policy Assignment Wizard:
-   - Click 'Launch Azure Policy Assignment wizard'.
-4. Define Scope:
-   - In the 'Basics' tab, set the scope by selecting the subscription and, optionally, a resource group.
-5. Configure Parameters:
-   - In the 'Parameters' tab:
-     - Ensure 'Only show parameters that require input' is unchecked.
-     - Select the appropriate Log Analytics workspace.
-     - Set desired log categories to 'True'.
-6. Review and Create:
-   - Review the configuration and click 'Create' to assign the policy.
-
-### Best Practices
-- Consistent Monitoring: Use Azure Policy to enforce uniform diagnostic settings across resources.
-- Selective Logging: Enable only necessary log categories to optimize data ingestion and costs.
-- Regular Reviews: Periodically audit diagnostic settings to ensure compliance and effectiveness.
-
-📌 Source: [Connect Microsoft Sentinel to Azure, Windows, and Microsoft services | Microsoft Learn](
+📌 Source: [Connect Microsoft Sentinel to Azure, Windows, and Microsoft services](
 https://learn.microsoft.com/en-us/azure/sentinel/connect-azure-windows-microsoft-services)
 
 ---
 ## Plan and configure Syslog and Common Event Format (CEF) event collections
 
-### Overview
-- Objective: Integrate Syslog and CEF messages into Microsoft Sentinel using the Azure Monitor Agent (AMA).
+**Overview:**
+- **Syslog** and **CEF** are two event formats used to collect logs from devices and applications for monitoring and analysis in Microsoft Sentinel.
+- **Syslog** is a standard for transmitting log messages over a network.
+- **CEF** is a log format used by many security devices to provide structured event data.
 
-### Key Concepts
-- Syslog: Standard protocol for transmitting log messages across network devices.
-- Common Event Format (CEF): Vendor-neutral log format designed for security information and event management (SIEM) systems.
-- Azure Monitor Agent (AMA): Collects and forwards Syslog and CEF messages to Microsoft Sentinel.
-- Data Collection Rule (DCR): Defines the log sources and types of messages to collect.
+**Steps for Configuration:**
+1. **Syslog Configuration:**
+   - **Set up Syslog Forwarding:**
+     - Configure Syslog servers to forward logs to Microsoft Sentinel.
+     - Enable **Syslog collection** in Microsoft Sentinel's data connectors.
+     - Use the **Linux agent** to forward Syslog messages to Sentinel.
+   - **Ensure Firewall Access:** 
+     - Open necessary ports (UDP 514 by default) for communication between devices and Microsoft Sentinel.
+   
+2. **CEF Configuration:**
+   - **Set up CEF Forwarding:**
+     - Configure CEF-compliant devices to forward logs to a collector (e.g., using the **CEF agent** or **Syslog agent**).
+     - Enable **CEF connector** in Microsoft Sentinel to receive logs from CEF devices.
+   
+**Best Practices:**
+- **Log Retention:** 
+   - Define retention policies to ensure logs are stored according to compliance requirements.
+- **Time Synchronization:** 
+   - Ensure **time sync** across devices for accurate log timestamps.
+- **Secure Communication:** 
+   - Use encryption (e.g., TLS) to protect log data in transit.
+- **Regular Monitoring:** 
+   - Continuously monitor logs for critical events and incidents.
 
-### Setup Process
-1. Install the Appropriate Solution:
-   - From the Microsoft Sentinel Content hub, install the Syslog or Common Event Format solution. 
-2. Create a Data Collection Rule (DCR):
-   - Navigate to Microsoft Sentinel > Configuration > Data connectors.
-   - Select 'Syslog via AMA' or 'Common Event Format (CEF) via AMA' connector.
-   - Click '+Create data collection rule'.
-   - Provide a name, select subscription, and resource group.
-   - Define log sources and specify log levels.
-3. Install Azure Monitor Agent (AMA):
-   - AMA is automatically installed on selected Linux machines during DCR creation.
-4. Configure Syslog Daemon on Log Forwarder:
-   - Set up 'rsyslog' or 'syslog-ng' to listen on TCP/UDP port 514 (or preferred port).
-   - Ensure configuration matches the application's log transmission settings.
-5. Configure Security Devices or Appliances:
-   - Set devices to send logs in CEF or Syslog format to the log forwarder's IP and designated port.
+**Additional Information:**
+- **AMA Agent**: The **Azure Monitor Agent (AMA)** collects both Syslog and CEF data.
+- **Data Connectors:** Set up the relevant connectors in Microsoft Sentinel to ingest Syslog and CEF logs.
+- **Use Case**: CEF is ideal for security devices (e.g., firewalls, intrusion detection systems), while Syslog is often used by network devices and Linux-based systems.
 
-### Best Practices
-- Avoid Data Duplication:
-   - Use separate facilities for Syslog and CEF messages.
-   - Adjust Syslog configuration on source devices to prevent overlapping log facilities. 
-- Secure Log Transmission:
-   - For devices sending logs over TLS, configure the Syslog daemon to support TLS communication.
-- Monitor and Maintain:
-   - Regularly review DCRs and AMA configurations to ensure continuous log collection.
-
-📌 Source: [Syslog and CEF AMA connectors - Microsoft Sentinel | Microsoft Learn](https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-overview?tabs=forwarder)
+📌 Source: [Syslog and CEF AMA connectors - Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-overview?tabs=forwarder)
 
 ---
 ## Plan and configure collection of Windows Security events by using data collection rules, including Windows Event Forwarding (WEF)
 
-### Overview
+**Overview:**
+- **Windows Security Events** can be collected using **Azure Monitor Agent (AMA)** and **Windows Event Forwarding (WEF)** to enhance security monitoring in Microsoft Sentinel.
+- **Data Collection Rules (DCRs)** help manage and configure log data collection for Sentinel.
 
-- **Objective**: Collect Windows Security events in Microsoft Sentinel using Azure Monitor Agent (AMA), Data Collection Rules (DCRs), and Windows Event Forwarding (WEF).
+**Steps for Configuration:**
+1. **Data Collection Rules (DCRs):**
+   - Create **DCRs** to define which logs to collect (e.g., Windows Security events).
+   - Use the **Azure Monitor Agent** to deploy DCRs for Windows machines.
+   - Configure DCRs for event filtering, routing, and data transformation.
+   
+2. **Windows Event Forwarding (WEF):**
+   - Configure **Windows Event Forwarding** on Windows servers to forward event logs to a collector server.
+   - Set up **Event Collector** to aggregate events from multiple Windows machines.
+   - Use **Event Subscription** to define which events to forward from target devices.
+   
+**Key Concepts:**
+- **Windows Security Events** (Event ID 4624, 4634, etc.) provide critical information about user logins, privilege usage, and other security-related events.
+- **AMA Agent** is used for collecting logs in a more efficient and scalable way compared to legacy agents like the **OMS Agent**.
+- **Forwarded Events Log** stores events forwarded via WEF to the collector.
 
-### Key Concepts
+**Best Practices:**
+- **Log Retention:** Define retention policies for event logs according to compliance and security requirements.
+- **Secure Forwarding:** Use encrypted communication channels to forward logs securely.
+- **Minimal Event Collection:** Filter and forward only necessary security events to optimize storage and analysis.
+- **Monitoring and Alerts:** Set up monitoring and alerts for key event types (e.g., logon failures, privilege escalations).
 
-- **Azure Monitor Agent (AMA)**: The agent responsible for collecting monitoring data from Windows machines.
-- **Data Collection Rules (DCRs)**: Define the data to collect and specify the destination for that data.
-- **Windows Event Forwarding (WEF)**: Aggregates event logs from multiple Windows devices to a central server for streamlined monitoring.
+**Additional Information:**
+- Ensure **time synchronization** across Windows devices for accurate event timestamps.
+- Use **DCRs** to ensure only relevant data is collected, avoiding unnecessary data overhead.
 
-
-### 1. Configure Windows Event Forwarding (WEF)
-
-- **Set Up a Collector**:
-  - Designate a Windows Server as the event collector.
-  - Configure the server to collect events from source computers using Group Policy or local settings.
-
-- **Configure Source Computers**:
-  - Ensure source computers are configured to forward events to the collector.
-  - Use Group Policy to define which events to forward.
-
-*Reference*: :contentReference[oaicite:0]{index=0}
-
-### 2. Install Azure Monitor Agent (AMA) on the Collector
-
-- **Installation**:
-  - Install the AMA on the event collector server.
-  - Ensure the agent is properly connected to your Azure environment.
-
-*Reference*: :contentReference[oaicite:1]{index=1}
-
-### 3. Create Data Collection Rules (DCRs)
-
-- **Define Data Collection**:
-  - In the Azure portal, navigate to Microsoft Sentinel > Configuration > Data connectors.
-  - Select 'Windows Security Events via AMA' connector.
-  - Click '+Create data collection rule'.
-  - Specify the event logs to collect (e.g., Security) and define severity levels.
-
-- **Assign DCR to Machines**:
-  - Assign the DCR to the event collector machine to ensure the specified events are collected.
-
-*Reference*: :contentReference[oaicite:2]{index=2}
-
-### Best Practices
-
-- **Centralized Collection**:
-  - Use WEF to centralize event logs from multiple sources, simplifying monitoring and management.
-
-- **Monitor Data Ingestion**:
-  - Regularly verify that events are being ingested into Microsoft Sentinel as expected.
-
-- **Security Considerations**:
-  - Ensure secure communication between source computers and the event collector.
-  - Implement appropriate access controls to protect collected event data.
-
-📌 Source:
+📌 Source: [Windows Security Events via AMA connector for Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/data-connectors/windows-security-events-via-ama)
 
 ---
+## Create custom log tables in the workspace to store ingested data
 
+**Overview:**
+- **Custom Log Tables** in Sentinel allow you to store data from non-standard or custom data sources.
+- Use **Custom Data Connectors** to ingest data from specific log sources, then configure custom tables to store the data.
+
+**Steps for Creating Custom Log Tables:**
+1. **Define Log Format:**
+   - Identify the log format and structure (e.g., Syslog, CEF, or custom formats).
+2. **Ingest Data:**
+   - Use **Custom Data Connectors** (e.g., via **rsyslog** or **syslog-ng**) to forward data into Sentinel.
+   - Ensure the data is structured for the custom table format (fields, types, etc.).
+3. **Create Custom Log Table:**
+   - In **Kusto Query Language (KQL)**, define the **custom log table schema**. For example:
+     ```kusto
+     .create table CustomLogs (timestamp: datetime, event_id: string, log_message: string)
+     ```
+   - Specify columns, types, and data structure.
+4. **Map Ingested Data to Table:**
+   - Use **ingestion-time transformation** to map fields from the ingested data into the custom table schema.
+5. **Validate and Test:**
+   - After ingestion, validate data is correctly populated into the custom table.
+   - Use **KQL queries** to ensure the integrity and structure of the logs.
+
+**Best Practices:**
+- **Log Schema Design:** Design log tables with well-defined schemas that align with the data structure.
+- **Field Mapping:** Make sure the ingestion process correctly maps fields to the custom table columns.
+- **Data Retention:** Define retention policies for custom logs to manage storage costs and compliance.
+- **Performance Optimization:** Consider partitioning large tables to optimize query performance.
+
+**Tools:**
+- **KQL** for querying custom logs.
+- **Log Analytics Workspace** to manage custom tables and connectors.
+
+📌 Source: [Custom Logs via AMA data connector - Configure data ingestion to Microsoft Sentinel from specific applications](https://learn.microsoft.com/en-us/azure/sentinel/unified-connector-custom-device?tabs=rsyslog)
+
+---
+## Monitor and optimize data ingestion
+
+**Overview:**
+- Data ingestion in Microsoft Sentinel can be monitored and optimized using transformation rules and monitoring tools.
+- **Optimization** involves improving data flow, ensuring efficiency, and managing costs.
+
+**Steps for Monitoring Data Ingestion:**
+1. **Monitor Ingestion Status:**
+   - Use **Log Analytics workspace** to check data ingestion status.
+   - Review data connector **health**, and ensure logs are flowing correctly.
+2. **Use Data Ingestion Logs:**
+   - Ingest **Data Connector logs** to monitor and verify the ingestion process.
+   - Track logs related to data collection failures or issues.
+3. **Set Up Alerts:**
+   - Create **alerts** for data ingestion anomalies (e.g., high error rates).
+   - Use built-in **Health Check queries** to identify data ingestion issues.
+
+**Optimization Techniques:**
+1. **Optimize Data Transformation:**
+   - Use **data transformation rules** to clean, enrich, and map data before ingestion.
+   - Apply **custom parsing** for non-standard formats like Syslog or CEF.
+2. **Limit Ingestion Volume:**
+   - Filter and transform data at the source to prevent ingesting unnecessary logs.
+   - Use **ingestion time transformation** to reduce data volume.
+3. **Partitioning Large Tables:**
+   - Implement **table partitioning** for large datasets to enhance query performance.
+4. **Data Retention Policies:**
+   - Set **retention rules** to manage how long data stays in Sentinel.
+   - Regularly assess data retention to balance between cost and data access.
+
+**Best Practices:**
+- Monitor **ingestion throughput** and resource usage to avoid bottlenecks.
+- Use **ingestion-time transformations** to clean data before it reaches the workspace.
+- Regularly check **data connector status** to ensure no issues with data ingestion.
+
+📌 Source: [Custom data ingestion and transformation in Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/data-transformation)
