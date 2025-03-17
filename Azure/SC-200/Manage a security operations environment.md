@@ -809,3 +809,155 @@ DeviceNetworkEvents
 ---
 ## Configure and use Microsoft connectors for Azure resources, including Azure Policy and diagnostic settings
 
+### Overview
+- Objective: Integrate Azure services with Microsoft Sentinel using diagnostic settings and Azure Policy.
+
+### Key Concepts
+- Diagnostic Settings: Configure Azure resources to send logs and metrics to destinations like Log Analytics, Event Hubs, or Storage Accounts.
+- Azure Policy: Automate the application of diagnostic settings across multiple resources for consistent monitoring.
+
+### Configuring Diagnostic Settings for Individual Resources
+1. Navigate to Resource:
+   - Go to the Azure portal.
+   - Select the resource (e.g., Azure Activity) you want to monitor.
+2. Access Diagnostic Settings:
+   - In the resource's menu, click on 'Diagnostic settings'.
+3. Add Diagnostic Setting:
+   - Click '+ Add diagnostic setting'.
+   - Provide a name for the setting.
+4. Select Logs and Metrics:
+   - Choose the log categories and metrics to collect.
+5. Choose Destination:
+   - Select 'Send to Log Analytics workspace'.
+   - Specify the target Log Analytics workspace.
+6. Save Configuration:
+   - Click 'Save' to apply the settings.
+
+### Automating Diagnostic Settings with Azure Policy
+1. Access Data Connectors:
+   - In Microsoft Sentinel, go to 'Data connectors'.
+2. Select Resource Type:
+   - Choose the resource type (e.g., Azure Activity) from the gallery.
+3. Launch Azure Policy Assignment Wizard:
+   - Click 'Launch Azure Policy Assignment wizard'.
+4. Define Scope:
+   - In the 'Basics' tab, set the scope by selecting the subscription and, optionally, a resource group.
+5. Configure Parameters:
+   - In the 'Parameters' tab:
+     - Ensure 'Only show parameters that require input' is unchecked.
+     - Select the appropriate Log Analytics workspace.
+     - Set desired log categories to 'True'.
+6. Review and Create:
+   - Review the configuration and click 'Create' to assign the policy.
+
+### Best Practices
+- Consistent Monitoring: Use Azure Policy to enforce uniform diagnostic settings across resources.
+- Selective Logging: Enable only necessary log categories to optimize data ingestion and costs.
+- Regular Reviews: Periodically audit diagnostic settings to ensure compliance and effectiveness.
+
+📌 Source: [Connect Microsoft Sentinel to Azure, Windows, and Microsoft services | Microsoft Learn](
+https://learn.microsoft.com/en-us/azure/sentinel/connect-azure-windows-microsoft-services)
+
+---
+## Plan and configure Syslog and Common Event Format (CEF) event collections
+
+### Overview
+- Objective: Integrate Syslog and CEF messages into Microsoft Sentinel using the Azure Monitor Agent (AMA).
+
+### Key Concepts
+- Syslog: Standard protocol for transmitting log messages across network devices.
+- Common Event Format (CEF): Vendor-neutral log format designed for security information and event management (SIEM) systems.
+- Azure Monitor Agent (AMA): Collects and forwards Syslog and CEF messages to Microsoft Sentinel.
+- Data Collection Rule (DCR): Defines the log sources and types of messages to collect.
+
+### Setup Process
+1. Install the Appropriate Solution:
+   - From the Microsoft Sentinel Content hub, install the Syslog or Common Event Format solution. 
+2. Create a Data Collection Rule (DCR):
+   - Navigate to Microsoft Sentinel > Configuration > Data connectors.
+   - Select 'Syslog via AMA' or 'Common Event Format (CEF) via AMA' connector.
+   - Click '+Create data collection rule'.
+   - Provide a name, select subscription, and resource group.
+   - Define log sources and specify log levels.
+3. Install Azure Monitor Agent (AMA):
+   - AMA is automatically installed on selected Linux machines during DCR creation.
+4. Configure Syslog Daemon on Log Forwarder:
+   - Set up 'rsyslog' or 'syslog-ng' to listen on TCP/UDP port 514 (or preferred port).
+   - Ensure configuration matches the application's log transmission settings.
+5. Configure Security Devices or Appliances:
+   - Set devices to send logs in CEF or Syslog format to the log forwarder's IP and designated port.
+
+### Best Practices
+- Avoid Data Duplication:
+   - Use separate facilities for Syslog and CEF messages.
+   - Adjust Syslog configuration on source devices to prevent overlapping log facilities. 
+- Secure Log Transmission:
+   - For devices sending logs over TLS, configure the Syslog daemon to support TLS communication.
+- Monitor and Maintain:
+   - Regularly review DCRs and AMA configurations to ensure continuous log collection.
+
+📌 Source: [Syslog and CEF AMA connectors - Microsoft Sentinel | Microsoft Learn](https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-overview?tabs=forwarder)
+
+---
+## Plan and configure collection of Windows Security events by using data collection rules, including Windows Event Forwarding (WEF)
+
+### Overview
+
+- **Objective**: Collect Windows Security events in Microsoft Sentinel using Azure Monitor Agent (AMA), Data Collection Rules (DCRs), and Windows Event Forwarding (WEF).
+
+### Key Concepts
+
+- **Azure Monitor Agent (AMA)**: The agent responsible for collecting monitoring data from Windows machines.
+- **Data Collection Rules (DCRs)**: Define the data to collect and specify the destination for that data.
+- **Windows Event Forwarding (WEF)**: Aggregates event logs from multiple Windows devices to a central server for streamlined monitoring.
+
+
+### 1. Configure Windows Event Forwarding (WEF)
+
+- **Set Up a Collector**:
+  - Designate a Windows Server as the event collector.
+  - Configure the server to collect events from source computers using Group Policy or local settings.
+
+- **Configure Source Computers**:
+  - Ensure source computers are configured to forward events to the collector.
+  - Use Group Policy to define which events to forward.
+
+*Reference*: :contentReference[oaicite:0]{index=0}
+
+### 2. Install Azure Monitor Agent (AMA) on the Collector
+
+- **Installation**:
+  - Install the AMA on the event collector server.
+  - Ensure the agent is properly connected to your Azure environment.
+
+*Reference*: :contentReference[oaicite:1]{index=1}
+
+### 3. Create Data Collection Rules (DCRs)
+
+- **Define Data Collection**:
+  - In the Azure portal, navigate to Microsoft Sentinel > Configuration > Data connectors.
+  - Select 'Windows Security Events via AMA' connector.
+  - Click '+Create data collection rule'.
+  - Specify the event logs to collect (e.g., Security) and define severity levels.
+
+- **Assign DCR to Machines**:
+  - Assign the DCR to the event collector machine to ensure the specified events are collected.
+
+*Reference*: :contentReference[oaicite:2]{index=2}
+
+### Best Practices
+
+- **Centralized Collection**:
+  - Use WEF to centralize event logs from multiple sources, simplifying monitoring and management.
+
+- **Monitor Data Ingestion**:
+  - Regularly verify that events are being ingested into Microsoft Sentinel as expected.
+
+- **Security Considerations**:
+  - Ensure secure communication between source computers and the event collector.
+  - Implement appropriate access controls to protect collected event data.
+
+📌 Source:
+
+---
+
