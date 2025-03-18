@@ -167,6 +167,8 @@
 📌 Source: [Review workload protection](https://learn.microsoft.com/en-us/azure/defender-for-cloud/workload-protections-dashboard)
 
 ---
+# Configure detections in Microsoft Defender XDR
+
 ## Configure and manage custom detection rules
 
 **Overview**
@@ -282,13 +284,160 @@
 📌 Source: [Configure the deception capability in Microsoft Defender XDR](https://learn.microsoft.com/en-us/defender-xdr/configure-deception)
 
 ---
-##
+# 	- Configure detections in Microsoft Sentinel
 
-📌 Source:
+## Classify and analyze data by using entities
+
+**Definition of Entities**
+  - Entities are classifications or labels for data elements in Microsoft Sentinel alerts.
+
+**Entity Categories**
+  - **Assets**: Internal, protected, or inventoried objects (e.g., Accounts, Hosts, Mailboxes, Azure resources).
+  - **Other Entities (Evidence)**: External items or indicators of compromise (e.g., IP addresses, Files, Processes, URLs).
+
+**Supported Entity Types**
+  - Account, Host, IP address, URL, Azure resource, Cloud application, DNS resolution, File, File hash, Malware, Process, Registry key, Registry value, Security group, Mailbox, Mail cluster, Mail message, Submission mail.
+
+**Entity Identifiers**
+  - **Strong Identifiers**: Uniquely identify an entity (e.g., Microsoft Entra account's GUID).
+  - **Weak Identifiers**: May not uniquely identify an entity in all cases; combining multiple weak identifiers can form a strong identifier.
+
+**Entity Mapping in Analytics Rules**
+  - Map data fields in tables to Microsoft Sentinel entities to enhance incident information.
+  - **Steps**:
+    1. Navigate to **Analytics** in Microsoft Sentinel.
+    2. Select or create a new analytics rule.
+    3. In the **Set rule logic** section, define the query and map relevant data fields to entity types.
+    4. Save and enable the rule.
+
+**Entity Pages**
+  - Provide detailed information about specific entities, including related alerts, incidents, and activities.
+  - **Access**:
+    - Click on an entity link within an alert or incident to view its entity page.
+
+**Best Practices**
+  - Ensure alert providers properly identify entities using strong identifiers to facilitate accurate entity merging.
+  - Regularly review and update entity mappings to maintain effective data classification and analysis.
+
+📌 Source: [Entities in Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/entities)
 
 ---
-##
+## Configure and manage analytics rules
 
-📌 Source:
+**Analytics Rules Overview**
+  - Automate threat detection by running queries on collected data to identify security threats.
+  - Generate alerts upon detecting suspicious activities, which are then aggregated into incidents for investigation.
+
+**Types of Analytics Rules**
+  - **Scheduled Rules**: Run Kusto Query Language (KQL) queries at set intervals to analyze data over a specified lookback period.
+  - **Near-Real-Time (NRT) Rules**: Execute every minute for up-to-date threat detection, similar to scheduled rules but with higher frequency.
+  - **Anomaly Rules**: Utilize machine learning to identify deviations from typical patterns.
+  - **Microsoft Security Rules**: Integrate alerts from other Microsoft security products. 
+
+**Creating Analytics Rules**
+  - **From Templates**:
+    1. Navigate to **Analytics** under the **Configuration** section in Microsoft Sentinel.
+    2. Select the **Rule templates** tab.
+    3. Choose a template and click **Create rule**.
+    4. Customize the rule settings as needed and save.
+  - **From Scratch**:
+    1. In **Analytics**, select **+ Create** and choose **Scheduled query rule**.
+    2. Define rule details, set the query logic using KQL, and configure scheduling and thresholds.
+    3. Specify incident settings, automated responses, and review before creating the rule.
+
+**Managing Analytics Rules**
+  - **Viewing Active Rules**: Access the **Active rules** tab in the **Analytics** section to monitor and manage existing rules.
+  - **Editing Rules**: Select a rule from the list to modify its configuration, query logic, or scheduling.
+  - **Disabling/Enabling Rules**: Toggle the rule's status to control its activity without deleting it.
+
+**Best Practices**
+  - Regularly review and update analytics rules to adapt to evolving threats.
+  - Utilize rule templates from the Content hub for commonly used detection scenarios.
+  - Customize rules to align with your organization's specific security requirements.
+  - Test new or modified rules in a controlled environment before deploying them broadly.
+
+📌 Source: [Threat detection in Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/threat-detection)
 
 ---
+## Query Microsoft Sentinel data by using ASIM parsers
+
+**Advanced Security Information Model (ASIM) Overview**
+  - ASIM provides a unified framework for normalizing security data across various sources in Microsoft Sentinel.
+  - It utilizes Kusto Query Language (KQL) functions, known as parsers, to transform raw data into standardized schemas.
+
+**Types of ASIM Parsers**
+  - **Unifying Parsers**: Serve as a central point, invoking source-specific parsers to aggregate data into a common schema.
+  - **Source-Specific Parsers**: Handle the normalization of data from specific sources, ensuring compatibility with the unified schema.
+
+**Parser Naming Conventions**
+  - **Built-in Parsers**:
+    - Unifying: `_Im_<Schema>` (e.g., `_Im_Dns`)
+    - Source-Specific: `_Im_<Schema>_<Source>` (e.g., `_Im_Dns_InfobloxNIOS`)
+  - **Workspace-Deployed Parsers**:
+    - Unifying: `im<Schema>`
+    - Source-Specific: `vim<Schema><Source>`
+
+**Using ASIM Parsers in Queries**
+  - Replace direct table references with the appropriate unifying parser to access normalized data.
+  - **Example**: To query DNS logs across various sources:
+    ```kql
+    _Im_Dns
+    | where DnsQuery contains "malicious.com"
+    ```
+    This approach ensures that DNS data from all integrated sources is queried uniformly.
+
+**Benefits of Using ASIM Parsers**
+  - Simplifies queries by abstracting source-specific details.
+  - Enhances the consistency and reliability of security analyses.
+  - Facilitates the creation of reusable and scalable security content.
+
+**Best Practices**
+  - Utilize built-in parsers when available for standardized schemas.
+  - Deploy workspace-specific parsers for sources not covered by built-in options.
+  - Regularly update and manage parsers to adapt to new data sources and formats.
+
+📌 Source: [The Advanced Security Information Model (ASIM) parsers (Public preview)](https://learn.microsoft.com/en-us/azure/sentinel/normalization-parsers-overview)
+
+---
+## Implement behavioral analytics
+
+**Behavioral Analytics Overview**
+  - Detect threats by analyzing **entity behaviors** (users, devices, etc.) based on deviations from normal activity patterns.
+  - Utilizes **machine learning** and **statistical models** to identify unusual or suspicious activities.
+  - Helps identify potential insider threats, compromised accounts, and lateral movement.
+
+**Key Concepts**
+  - **Entities**: Users, devices, IP addresses, and other network objects.
+  - **Behavioral Baseline**: Normal behavior patterns established through continuous monitoring.
+  - **Anomalies**: Activities that significantly deviate from the baseline, indicating potential threats.
+
+**Components of Behavioral Analytics**
+  - **Entity Behavior Analytics (EBA)**: Uses machine learning to track and analyze entity activities over time.
+  - **User and Entity Behavior Analytics (UEBA)**: Focuses specifically on users and devices to detect malicious activity or compromises.
+  - **Threat Intelligence**: Enriches entity activity data with threat feeds to enhance detection accuracy.
+
+**Steps for Implementing**
+  - **Step 1**: Configure the **Microsoft Sentinel** workspace and enable built-in **Analytics rules**.
+  - **Step 2**: Ensure relevant data connectors (like **Azure Active Directory**, **Windows Security**, etc.) are in place.
+  - **Step 3**: Define and tune **Analytics rules** using **machine learning models** and **customized entity data**.
+  - **Step 4**: Monitor the detected anomalies and integrate with existing workflows for incident response.
+
+**Best Practices**
+  - Regularly **tune analytics rules** to minimize false positives.
+  - Use **machine learning** to automatically adjust to shifting normal behavior over time.
+  - Leverage **threat intelligence** to contextualize anomalies and improve detection accuracy.
+  - Focus on high-impact entities (admins, critical infrastructure) for more precise detection.
+
+**Example**
+  - **Behavioral Analytics Rule Example**: Identify suspicious login attempts by a user who has deviated from their normal logon patterns.
+    ```kql
+    SecurityEvent
+    | where EventID == 4624 and AccountType == "User"
+    | summarize count() by AccountName, bin(TimeGenerated, 1h)
+    | where count_ > threshold
+    ```
+
+📌 Source: [Advanced threat detection with User and Entity Behavior Analytics (UEBA) in Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/identify-threats-with-entity-behavior-analytics)
+
+---
+
