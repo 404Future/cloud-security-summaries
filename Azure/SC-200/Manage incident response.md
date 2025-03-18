@@ -618,6 +618,100 @@
 📌 Source: [Investigate Microsoft Sentinel incidents in depth in the Azure portal](https://learn.microsoft.com/en-us/azure/sentinel/investigate-incidents)
 
 ---
+## Create and configure automation rules
+
+**Overview**
+- Automation rules in Microsoft Sentinel streamline incident and alert management by automating responses based on defined triggers and conditions.
+
+**Creating an Automation Rule**
+1. **Navigate to Automation Page**:
+   - In the Azure portal:
+     - Go to **Microsoft Sentinel**.
+     - Select **Configuration** > **Automation**.
+   - In the Defender portal:
+     - Go to **Microsoft Sentinel** > **Configuration** > **Automation**.
+2. **Initiate Rule Creation**:
+   - Click **Create** > **Automation rule**.
+3. **Define Rule Settings**:
+   - **Name**: Enter a unique name for the rule.
+   - **Trigger**: Select when the rule should activate:
+     - **When incident is created**
+     - **When incident is updated**
+     - **When alert is created**
+   - **Conditions**: Set criteria for the rule to apply.
+   - **Actions**: Specify automated responses, such as:
+     - Creating incident tasks.
+     - Running playbooks.
+     - Assigning incidents to owners.
+     - Changing incident severity.
+     - Tagging incidents.
+     - Closing incidents with specified comments.
+4. **Review and Create**:
+   - Verify all settings.
+   - Click **Create** to establish the automation rule.
+
+**Best Practices**
+- **Design Considerations**:
+  - Align automation rules with organizational workflows and incident response strategies.
+  - Regularly review and update rules to adapt to evolving security requirements.
+- **Management**:
+  - Monitor the performance and effectiveness of automation rules.
+  - Adjust conditions and actions as necessary based on incident trends and feedback.
+
+📌 Source: [Create and use Microsoft Sentinel automation rules to manage response](https://learn.microsoft.com/en-us/azure/sentinel/create-manage-use-automation-rules?tabs=azure-portal%2Conboarded)
+
+---
+## Create and configure Microsoft Sentinel playbooks
+
+**Overview**
+- Playbooks in Microsoft Sentinel automate responses to incidents, alerts, or specific entities, enhancing security operations efficiency. They are built on Azure Logic Apps, offering customization and integration capabilities.
+
+**Creating a Playbook**
+1. **Access Automation**:
+   - In the Azure portal or Defender portal, navigate to your Microsoft Sentinel workspace.
+   - Select **Automation** under the Configuration section.
+2. **Initiate Playbook Creation**:
+   - Click **Create** and choose the appropriate playbook type based on your trigger preference:
+     - **Playbook with incident trigger**
+     - **Playbook with alert trigger**
+     - **Playbook with entity trigger**
+3. **Design Playbook Workflow**:
+   - Utilize Azure Logic Apps designer to define the workflow, incorporating necessary triggers, actions, and conditions.
+   - For playbooks requiring access to protected resources within an Azure virtual network, consider creating a Standard logic app workflow to leverage virtual network integration features. 
+
+**Best Practices**
+- **Role-Based Access Control (RBAC)**:
+  - Assign appropriate roles to users managing playbooks:
+    - **Logic App Contributor**:
+      - Edit and manage logic apps.
+    - **Logic App Operator**:
+      - Read, enable, and disable logic apps.
+    - **Standard Logic Apps Standard Contributor**:
+      - Manage all aspects of a workflow.
+    - **Standard Logic Apps Standard Developer**:
+      - Create and edit workflows.
+    - **Standard Logic Apps Standard Operator**:
+      - Enable, resubmit, and disable workflows.
+  - For detailed role descriptions, refer to Microsoft Sentinel roles documentation. 
+- **Customization and Testing**:
+  - Tailor playbooks to align with your organization's security protocols.
+  - Thoroughly test playbooks to ensure they function as intended before deployment.
+- **Monitoring and Maintenance**:
+  - Regularly review playbook performance and update them to adapt to evolving security threats and operational requirements.
+
+📌 Source: [Create and manage Microsoft Sentinel playbooks](https://learn.microsoft.com/en-us/azure/sentinel/automation/create-playbooks?tabs=azure-portal%2Cconsumption)
+
+---
+## Run playbooks on on-premises resources
+
+📌 Source: [Automate and run Microsoft Sentinel playbooks](https://learn.microsoft.com/en-us/azure/sentinel/automation/run-playbooks?tabs=before-onboarding%2Cincidents%2Cmicrosoft-defender%2Cincident-details-new)
+
+---
+## 
+
+📌 Source:
+
+---
 ## 
 
 📌 Source:
