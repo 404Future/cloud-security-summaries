@@ -284,7 +284,7 @@
 📌 Source: [Configure the deception capability in Microsoft Defender XDR](https://learn.microsoft.com/en-us/defender-xdr/configure-deception)
 
 ---
-# 	- Configure detections in Microsoft Sentinel
+# 	Configure detections in Microsoft Sentinel
 
 ## Classify and analyze data by using entities
 
