@@ -704,27 +704,313 @@
 ---
 ## Run playbooks on on-premises resources
 
+**Overview**
+- **Microsoft Sentinel Playbooks**: Automated workflows responding to incidents, alerts, or specific entities. Built using Azure Logic Apps.
+
+**Key Concepts**
+- **Azure Logic Apps**: Foundation for creating playbooks, enabling integration with various services, including on-premises systems.
+- **Hybrid Runbook Worker**: Allows Azure Automation runbooks to interact with on-premises resources.
+
+**Permissions and Roles**
+- **Required Roles**:
+  - Owner: Grants access to playbooks in the resource group.
+  - Microsoft Sentinel Contributor: Attach playbooks to analytics or automation rules.
+  - Microsoft Sentinel Responder: Access incidents to run playbooks manually.
+  - Microsoft Sentinel Playbook Operator: Run playbooks manually.
+  - Microsoft Sentinel Automation Contributor: Allow automation rules to run playbooks.
+  - Logic App Contributor: Required on the resource group containing the playbooks.
+
+**Implementing Playbooks for On-Premises Resources**
+1. **Set Up Azure Automation Account**:
+   - Create an Azure Automation Account.
+   - Deploy a Hybrid Runbook Worker to communicate with on-premises systems.
+   - Register the Hybrid Worker with Azure Automation.
+2. **Create PowerShell Runbook**:
+   - Develop a PowerShell script to perform desired actions on on-premises resources (e.g., disabling a compromised user account).
+   - Ensure the script is tested and functions as intended.
+3. **Integrate Runbook with Sentinel Playbook**:
+   - In Microsoft Sentinel, create a playbook that triggers the Azure Automation runbook.
+   - Configure the playbook to respond to specific alerts or incidents.
+4. **Assign Necessary Permissions**:
+   - Ensure the Microsoft Sentinel service account has the *Microsoft Sentinel Automation Contributor* role on the resource group containing the playbook.
+   - Verify that the Hybrid Runbook Worker has appropriate permissions to execute tasks on on-premises resources.
+
+**Best Practices**
+- **Security**:
+  - Limit permissions to the minimum necessary for both Azure and on-premises environments.
+  - Regularly review and update access controls.
+- **Testing**:
+  - Thoroughly test playbooks in a controlled environment before deploying to production.
+  - Monitor the execution of playbooks to ensure they perform as expected.
+- **Documentation**:
+  - Maintain clear documentation of playbook workflows and associated permissions.
+  - Keep records of any changes made to playbooks or related configurations.
+
 📌 Source: [Automate and run Microsoft Sentinel playbooks](https://learn.microsoft.com/en-us/azure/sentinel/automation/run-playbooks?tabs=before-onboarding%2Cincidents%2Cmicrosoft-defender%2Cincident-details-new)
 
 ---
-## 
+# Implement and use Copilot for Security
 
-📌 Source:
+## Create and use promptbooks
+
+**Overview**
+- **Promptbooks**: Sequences of prompts designed to automate specific security tasks in Microsoft Security Copilot. 
+
+**Creating a Promptbook**
+1. **Initiate from Existing Session**:
+   - Identify a sequence of prompts frequently used together.
+   - Access the promptbook builder in Security Copilot.
+   - Select prompts from the existing session to include in the new promptbook.
+   - Save and name the promptbook for future use. 
+2. **Design Principles**:
+   - Define clear objectives for the promptbook.
+   - Ensure prompts are logically sequenced, with each building upon the previous.
+   - Test the promptbook to verify it meets intended goals. 
+
+**Using Prebuilt Promptbooks**
+1. **Access Promptbook Library**:
+   - Navigate to the Promptbook library in Security Copilot.
+   - Browse available promptbooks relevant to your role or task.
+2. **Execute a Promptbook**:
+   - Select the desired promptbook.
+   - Provide necessary inputs (e.g., user principal name, incident ID).
+   - Submit and review the generated responses. 
+
+**Best Practices**
+- **Effective Prompting**:
+   - Craft clear, specific prompts to elicit accurate responses.
+   - Use natural language and provide necessary context. 
+- **Feedback and Iteration**:
+   - Regularly review promptbook performance.
+   - Incorporate feedback to refine and improve prompt sequences.
+
+📌 Source: [Using promptbooks in Microsoft Security Copilot](https://learn.microsoft.com/en-us/copilot/security/using-promptbooks)
 
 ---
-## 
+## Manage sources for Copilot for Security, including plugins and files
 
-📌 Source:
+**Overview**
+- **Microsoft Security Copilot**: An AI-driven security analysis tool that can be extended using plugins and customized with uploaded files.
+
+**Managing Plugins**
+
+**Plugin Categories**
+- **Microsoft Plugins**: Preinstalled plugins for Microsoft security services.
+- **Non-Microsoft Plugins**: Support for third-party services and websites.
+- **Custom Plugins**: User-created plugins for specialized tasks.
+
+**Adding a Plugin**
+1. **Access Plugin Management**:
+   - Click the **Sources** icon in the prompt bar.
+2. **Choose Plugin Type**:
+   - Select **Security Copilot plugin** or **OpenAI plugin**.
+3. **Upload Plugin**:
+   - **For Security Copilot plugin**:
+     - Upload a file or provide a link to a `.yaml` or `.json` file.
+   - **For OpenAI plugin**:
+     - Provide a link to the OpenAI plugin.
+4. **Set Availability**:
+   - Decide if the plugin is for personal use or organization-wide.
+5. **Finalize**:
+   - Complete any additional setup as prompted.
+
+**Managing Plugin Settings**
+- **Toggle Plugins**:
+  - Enable or disable plugins via the **Sources** menu.
+- **Personalize Settings**:
+  - Configure specific settings for plugins like Microsoft Sentinel.
+
+**Permissions**
+- **Default**:
+  - Only owners can add and manage custom plugins.
+- **Extended**:
+  - Owners can permit contributors to add/manage plugins.
+
+**Uploading Files**
+
+**Supported File Types**
+- DOCX, MD, PDF, and TXT formats.
+
+**File Size Limits**
+- **Per File**: Up to 3 MB.
+- **Total**: Up to 20 MB across all uploads.
+
+**Upload Process**
+1. **Initiate Upload**:
+   - Click the **Sources** icon in the prompt bar.
+2. **Select Files**:
+   - Navigate to **Files** > **Upload file**.
+3. **Activate Files**:
+   - Toggle the switch beside each file to enable it as a source.
+
+**Storage and Privacy**
+- **Storage Location**:
+  - Files are stored in the Security Copilot service within your tenant's home geo.
+- **Access**:
+  - Uploaded files are accessible only to the uploader.
+
+**Deletion**
+- **Remove File**:
+  - Use the trash icon next to the file in the **Uploads** section.
+
+**Permissions for File Uploads**
+- **Default**:
+  - Contributors and owners can upload files.
+- **Restriction**:
+  - Owners can limit file uploads to owners only.
+
+📌 Source: 
+- [Manage plugins in Microsoft Security Copilot](https://learn.microsoft.com/en-us/copilot/security/manage-plugins?tabs=securitycopilotplugin)
+- [Add a source by uploading a file (Preview)](https://learn.microsoft.com/en-us/copilot/security/upload-file)
 
 ---
-## 
+## Integrate Copilot for Security by implementing connectors
 
-📌 Source:
+**Overview**
+- **Connectors**: APIs that enable developers and users to interact with Microsoft Security Copilot for specialized tasks. 
+
+**Available Connectors**
+
+**Logic Apps Connector**
+- **Functionality**: Allows integration of Security Copilot into Azure Logic Apps workflows.
+- **Actions**:
+  - *Submit a Security Copilot prompt*: Initiates a new Security Copilot investigation based on a natural language prompt.
+  - *Submit a Security Copilot promptbook*: Executes a sequence of prompts (promptbook) and returns the output to the workflow.
+- **Authentication**: Requires Microsoft Entra ID (formerly Azure Active Directory) user identity with appropriate permissions.
+- **Prerequisites**:
+  - Tenant admin must set up access to Microsoft Security Copilot.
+  - Authenticated user should have access to relevant security data sources.
+- **Implementation Steps**:
+  1. Create and configure a new Logic Apps workflow in the Azure portal.
+  2. Set up the initial trigger step.
+  3. Search for and add the Security Copilot action (either "Submit a Security Copilot prompt" or "Submit a Security Copilot promptbook").
+  4. Fill in the required parameters for the selected action.
+  5. Save and run the workflow to integrate with Security Copilot.
+
+📌 Source: [Connectors overview in Microsoft Security Copilot (Preview)](https://learn.microsoft.com/en-us/copilot/security/connectors-overview)
 
 ---
-## 
+## Manage permissions and roles in Copilot for Security
 
-📌 Source:
+**Overview**
+- **Security Copilot Roles**: Define access to platform features; managed within Security Copilot.
+- **Microsoft Entra Roles**: Control access to security data across Microsoft services; managed via Microsoft Entra ID.
+
+**Security Copilot Roles**
+- **Copilot Owner**:
+  - Full access to all platform features, including configuration and permission assignments.
+- **Copilot Contributor**:
+  - Access to use platform features without administrative privileges.
+
+**Microsoft Entra Roles**
+- **Security Administrator**:
+  - Manages security-related features across Microsoft services.
+- **Global Administrator**:
+  - Full access to all administrative features in Microsoft Entra ID.
+
+*Note: Users with Security Administrator or Global Administrator roles automatically inherit Copilot Owner access.*
+
+**Best Practices**
+- **Assign Minimal Necessary Permissions**:
+  - Use roles with the least privileges required for tasks to enhance security.
+- **Utilize Recommended Security Roles**:
+  - Assign the "Recommended Microsoft Security roles" group to streamline access management.
+
+📌 Source: [Understand authentication in Microsoft Security Copilot](https://learn.microsoft.com/en-us/copilot/security/authentication)
+
+---
+## Monitor Copilot for Security capacity and cost
+
+**Overview**
+- Microsoft Security Copilot operates on a provisioned capacity model, utilizing Security Compute Units (SCUs) to handle workloads. Effective management of SCUs is crucial for monitoring capacity and controlling costs.
+
+**Key Concepts**
+- **Security Compute Units (SCUs)**
+   - **Definition**: Units representing the compute capacity allocated for Security Copilot operations.
+   - **Provisioning**: SCUs can be adjusted (increased or decreased) at any time to align with organizational needs.
+- **Billing Structure**
+   - **Hourly Billing**: SCUs are billed in hourly blocks. Any usage within an hour is charged as a full SCU, regardless of the exact duration.
+   - **Example**: Provisioning an SCU at 9:05 AM and deprovisioning at 9:35 AM incurs a charge for the entire hour.
+
+**Monitoring Usage**
+- **Usage Monitoring Dashboard**
+   - **Access**:
+     1. Sign in to Security Copilot.
+     2. Navigate to **Home > Owner settings**.
+     3. Select **Usage monitoring**.
+   - **Features**:
+  - Displays SCU consumption over time.
+  - Provides data on session initiators, plugins used, and session categories.
+  - Allows filtering by various dimensions for detailed analysis.
+
+**Data Dimensions in Dashboard**
+- **Date**: When the session was initiated.
+- **Units Used**: Number of SCUs consumed.
+- **Initiated By**: User who started the session.
+- **Session ID**: Unique identifier for each session.
+- **Category**: Type of session (e.g., Prompt, Promptbook).
+- **Type**: Method of initiation (Manual or Automated).
+- **Copilot Experience**: Interface used (Standalone, Embedded, Azure Logic Apps).
+- **Plugin Used**: Specific plugin utilized during the session.
+
+**Best Practices**
+- **Optimize SCU Provisioning**
+   - **Timing**: Make provisioning changes at the start of an hour to maximize usage efficiency.
+   - **Monitoring**: Regularly review the usage dashboard to identify trends and adjust SCU allocations accordingly.
+- **Cost Management**
+   - **In-Product Dashboard**: Utilize the built-in dashboard to track and manage costs effectively.
+   - **Flexible Provisioning**: Adjust SCU levels based on organizational demands to optimize expenditure.
+
+📌 Source: [Manage usage of security compute units in Security Copilot](https://learn.microsoft.com/en-us/copilot/security/manage-usage)
+
+---
+## Identify threats and risks by using Copilot for Security
+
+**Overview**
+- Microsoft Security Copilot is an AI-driven platform designed to enhance security operations by integrating advanced threat intelligence and providing actionable insights.
+
+**Key Capabilities**
+- **Incident Investigation**: Provides contextual information to quickly triage complex security alerts into actionable summaries, aiding in faster remediation. 
+- **Threat Intelligence Integration**: Enriches alerts with relevant threat intelligence, connecting entities to known threat actors and informing severity assessments. 
+- **KQL Query Assistance**: Assists in building KQL queries or analyzing suspicious scripts, eliminating the need for manual scripting and enabling team members to execute technical tasks efficiently. 
+
+**Best Practices for Threat Identification**
+1. **Leverage Enriched Threat Intelligence**:
+   - Utilize Security Copilot to enrich incident data with threat intelligence, aiding in the identification of known threat actors and assessing incident severity. 
+2. **Utilize AI-Assisted Guidance**:
+   - Employ AI-driven insights to investigate access issues, identify and summarize data and user risks, and contextualize incidents swiftly.
+3. **Integrate with Microsoft Entra**:
+   - Use Security Copilot's integration with Microsoft Entra to investigate identity risks and troubleshoot identity tasks efficiently. 
+
+📌 Source: [Use case: Triage incidents based on enrichment from threat intelligence](https://learn.microsoft.com/en-us/copilot/security/triage-alert-with-enriched-threat-intel)
+
+---
+## Investigate incidents by using Copilot for Security
+
+**Overview**
+- Microsoft Security Copilot leverages AI to assist security operations teams in efficiently investigating and responding to security incidents. 
+
+**Key Steps in Incident Investigation**
+1. **Access Incident Details**:
+   - Navigate to the Microsoft Defender XDR incident queue to view incidents, which may correlate multiple alerts across various Microsoft security solutions. 
+2. **Review Incident Summary**:
+   - Utilize Security Copilot's automatically generated summaries to understand the incident's scope and attack phases. 
+3. **Analyze Specific Alerts**:
+   - Investigate individual alerts, such as suspected DCSync attacks or suspicious service creations, to determine malicious activity. 
+4. **Consult Security Copilot for Clarifications**:
+   - Use natural language prompts to gain insights into specific attack techniques or anomalies. 
+5. **Implement Guided Responses**:
+   - Follow the remediation steps provided by Security Copilot to contain and mitigate threats effectively. 
+
+**Best Practices**
+- **Leverage AI Capabilities**:
+  - Use Security Copilot's AI and machine learning features to contextualize incidents and generate appropriate response actions. 
+- **Summarize Incidents Efficiently**:
+  - Utilize Security Copilot to create concise incident summaries, aiding in swift decision-making. 
+- **Generate Incident Reports**:
+  - Employ Security Copilot to assist in drafting detailed incident reports, ensuring comprehensive documentation.
+
+📌 Source: [Use case: Incident response and remediation](https://learn.microsoft.com/en-us/copilot/security/use-case-incident-response-remediation)
 
 ---
 
