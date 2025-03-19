@@ -16,5 +16,6 @@ If you find this guide helpful and want to support my work, you can buy me a cof
 - [Manage a security operations environment (20-25%)](https://github.com/404Future/cloud-security-summaries/blob/main/Azure/SC-200/Manage%20a%20security%20operations%20environment.md)
 - [Configure protections and detections (15-20%)](https://github.com/404Future/cloud-security-summaries/blob/main/Azure/SC-200/Configure%20protections%20and%20detections.md)
 - [Manage incident response (25-30%)](https://github.com/404Future/cloud-security-summaries/blob/main/Azure/SC-200/Manage%20incident%20response.md)
+- [Manage security threats (15-20%)](https://github.com/404Future/cloud-security-summaries/blob/main/Azure/SC-200/Manage%20security%20threats.md)
 
 ---
