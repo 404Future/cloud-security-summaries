@@ -290,10 +290,73 @@
 ---
 ## Retrieve and manage archived log data
 
+**Overview**
+- Microsoft Sentinel allows restoration of archived log data for high-performance queries using Kusto Query Language (KQL).
+
+**Restoring Archived Log Data**
+1. **Access Search**:
+   - In Microsoft Sentinel, select **Search**.
+2. **Restore Data**:
+   - **Option A**: Click **Restore** at the top. In the Restoration pane, select the table and time range, then click **Restore**.
+   - **Option B**: Go to **Saved searches**, find desired search results, click **Restore**. For multiple tables, select one, then click **Actions > Restore**.
+3. **Monitor Restoration**:
+   - Check the **Restoration** tab for job status.
+
+**Viewing and Managing Restored Data**
+- **View Data**:
+  - After restoration, access data in the Logs query page (Azure portal) or Advanced hunting page (Defender portal).
+- **Delete Restored Tables**:
+  - In the **Restoration** tab, identify the table, click **Delete** to remove it.
+
+**Best Practices**
+- **Data Retention Planning**: Configure interactive and long-term data retention to balance performance and storage costs.
+- **Regular Monitoring**: Consistently monitor the status of restoration jobs to ensure timely access to data.
+
 📌 Source: [Restore archived logs from search](https://learn.microsoft.com/en-us/azure/sentinel/restore)
 
 ---
 ## Create and manage search jobs
+
+**Overview**
+- Search jobs in Microsoft Sentinel enable efficient searches across extensive datasets over extended periods, facilitating in-depth investigations without impacting system performance.
+
+**Creating a Search Job**
+1. **Access Search**:
+   - In the Azure portal: Navigate to **Microsoft Sentinel > General > Search**.
+   - In the Defender portal: Go to **Microsoft Sentinel > Search**.
+2. **Select Data Table**:
+   - Click the **Table** menu and choose the appropriate table for your search.
+3. **Define Search Criteria**:
+   - Enter your search term in the **Search** box.
+   - Click **Start** to open the Kusto Query Language (KQL) editor and preview results.
+4. **Refine and Run Search**:
+   - Modify the KQL query as needed.
+   - Click **Run** to update the preview.
+5. **Initiate Search Job**:
+   - Once satisfied, click the ellipsis (**...**) and toggle **Search job mode** on.
+   - Set the desired time range.
+   - Click **Search job**.
+   - Provide a new table name for storing results.
+   - Click **Run a search job**.
+
+**Managing Search Jobs**
+- **Monitor Status**:
+  - Navigate to the **Saved Searches** tab to view search job statuses.
+- **View Results**:
+  - Click **View search results** on the desired search card.
+  - Use **Add filter** to refine results.
+- **Bookmark Entries**:
+  - Select rows and click **Add bookmark** or use the bookmark icon.
+  - Bookmarks allow tagging, note-taking, and associating events with incidents.
+- **Customize View**:
+  - Click **Columns** to select additional columns for display.
+  - Apply the **Bookmarked** filter to view only bookmarked entries.
+  - Select **View all bookmarks** to manage bookmarks on the Hunting page.
+
+**Best Practices**
+- **Efficient Search Planning**: Define precise time ranges and search criteria to optimize performance.
+- **Regular Monitoring**: Check the status of search jobs to ensure timely completion.
+- **Effective Bookmarking**: Utilize bookmarks to document findings and facilitate collaboration.
 
 📌 Source: [Search across long time spans in large datasets](https://learn.microsoft.com/en-us/azure/sentinel/search-jobs?tabs=azure-portal)
 
@@ -302,15 +365,58 @@
 
 ## Activate and customize workbook templates
 
+**Creating and Customizing Workbook Templates**
+- **Access Templates**: In Microsoft Sentinel > Threat Management > Workbooks > Templates.
+- **Save Template**: Select "Save" in template details and choose storage location.
+- **Edit Workbook**: Click "Edit" in workbook toolbar to modify elements like time ranges or add new sections.
+- **Clone Workbook**: Use "Save as" to create a duplicate under the same subscription/resource group.
+- **Save Changes**: Save modifications to the workbook after editing.
+- **Workbooks Usage**: Customize based on persona (e.g., network admin) or frequency of use.
+
 📌 Source: [Visualize and monitor your data by using workbooks in Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/monitor-your-data?tabs=azure-portal#create-a-workbook-from-a-template)
 
 ---
 ## Create custom workbooks that include KQL
 
+**Create Custom Workbooks with KQL in Microsoft Sentinel**
+- **Add Workbook**: Navigate to Sentinel > Workbooks > Add Workbook.
+- **Data Source**: Set to 'Logs' and use Log Analytics workspace.
+- **Query Customization**: Use KQL queries to pull data (e.g., `SecurityEvent | where TimeGenerated > ago(7d)`).
+- **Parameters**: Add filters for interactivity (e.g., time range).
+- **Save Workbook**: Choose 'My Reports' for personal use, or 'Shared Reports' for organizational use.
+- **Visualize Data**: Use tiles to display query results in a customizable format.
+
 📌 Source: [Visualize and monitor your data by using workbooks in Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/monitor-your-data?tabs=azure-portal#create-new-workbook)
 
 ---
 ## Configure visualizations
+
+**Overview**
+  - Microsoft Sentinel utilizes workbooks to visualize and monitor data from connected sources. Workbooks, based on Azure Monitor workbooks, allow for the creation of custom dashboards and reports. 
+
+**Prerequisites**
+  - Ensure you have at least Workbook Reader or Workbook Contributor permissions on the resource group containing the Microsoft Sentinel workspace.
+
+**Creating a Workbook from a Template**
+  1. Navigate to **Workbooks** under the **Threat management** section in Microsoft Sentinel.
+  2. Select the **Templates** tab to view available workbook templates.
+  3. Choose a template relevant to your data sources.
+  4. Click **Save** to create an Azure resource based on the template.
+  5. Select **View saved workbook** to open and customize the workbook as needed.
+
+**Creating a New Workbook**
+  1. In Microsoft Sentinel, go to **Workbooks** under **Threat management**.
+  2. Click **Add workbook** to start a new workbook.
+  3. Select **Edit** to add text, queries, and parameters.
+  4. For queries:
+     - Set **Data source** to **Logs**.
+     - Set **Resource type** to **Log Analytics**.
+     - Choose the appropriate workspaces.
+  5. After customization, click **Save** to store the workbook. 
+
+**Best Practices**
+  - Regularly review and update workbooks to reflect changes in data sources and organizational needs.
+  - Utilize role-based access control (RBAC) to manage permissions and ensure appropriate access to workbooks. 
 
 📌 Source: [Visualize and monitor your data by using workbooks in Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/monitor-your-data?tabs=azure-portal)
 
