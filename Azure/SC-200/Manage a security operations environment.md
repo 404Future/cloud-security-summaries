@@ -504,9 +504,9 @@
   - Use **JSON role definitions** to specify permissions.
 
 **Key Built-in Roles & Their Scope:**  
-  1. **Microsoft Sentinel Contributor** – Full Sentinel management except workspace settings.  
-  2. **Microsoft Sentinel Reader** – View-only access.  
-  3. **Microsoft Sentinel Responder** – Manage incidents but cannot edit analytics rules.  
+  1. **Microsoft Sentinel Contributor**: Full Sentinel management except workspace settings.  
+  2. **Microsoft Sentinel Reader**: View-only access.  
+  3. **Microsoft Sentinel Responder**: Manage incidents but cannot edit analytics rules.  
 
 **Assigning a Custom Role:**
   1. Navigate to **Azure Portal** > **Microsoft Sentinel**.
