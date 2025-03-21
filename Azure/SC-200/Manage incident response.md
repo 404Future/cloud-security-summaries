@@ -33,15 +33,34 @@
 ---
 ## Investigate and remediate ransomware and business email compromise incidents identified by automatic attack disruption
 
-**Automatic Attack Disruption**: Triggers automatic containment actions (e.g., device isolation, user suspension).
+**Overview**
+- **Automatic Attack Disruption**: A feature in Microsoft Defender XDR that automatically contains active attacks, limiting their impact and giving security teams time to respond.
 
-**Containment Steps**:
-  - Block communication of affected devices.
-  - Suspend compromised user accounts.
+**Key Concepts**
+- **Incident Correlation**: Defender XDR aggregates signals from endpoints, identities, emails, and SaaS apps into high-confidence incidents for better threat assessment.
+- **Automated Response Actions**:
+  - **Device Containment**: Isolates compromised devices to block inbound and outbound communications.
+  - **User Account Suspension**: Disables compromised accounts to prevent further malicious activity.
 
-**Ransomware & BEC Detection**: Identified and tracked via alerts and automatic disruption actions.
+**Investigation and Remediation Steps**
+1. **Verify Backups**: Ensure offline backups are available before remediation.
+2. **Add Indicators**: Block known attacker communication channels in firewalls and endpoints.
+3. **Reset Compromised Users**: Reset passwords for affected and privileged accounts.
+4. **Isolate Control Points**: Disconnect known attacker infrastructure from the internet.
+5. **Remove Malware**: Conduct antivirus scans on all suspected devices.
+6. **Recover Files**: Use File History or System Protection to restore clean versions.
 
-**Next Steps**: Investigate alerts, apply remediation measures, and monitor for recurrence.
+**Best Practices**
+- **Comprehensive Deployment**: Ensure Defender is deployed across all relevant platforms.
+- **Automation Levels**: Set device group policies to ‘Full - remediate threats automatically’ for seamless responses.
+- **Device Discovery**: Enable 'Standard Discovery' to ensure full monitoring.
+- **Audit Policies**: Configure auditing on domain controllers to log critical events.
+- **Action Accounts**: Verify Defender for Identity has necessary permissions for remediation.
+
+**Monitoring and Management**
+- **Incident Queue**: Use the Microsoft Defender portal to view and manage incidents.
+- **Action Center**: Track all remediation and response actions for oversight.
+- **Attack Disruption Tags**: Identify incidents tagged with 'Attack Disruption' to prioritize containment.
 
 📌 Source: [Automatic attack disruption in Microsoft Defender XDR](https://learn.microsoft.com/en-us/defender-xdr/automatic-attack-disruption)
 
