@@ -365,26 +365,85 @@
 
 ## Activate and customize workbook templates
 
-**Creating and Customizing Workbook Templates**
-- **Access Templates**: In Microsoft Sentinel > Threat Management > Workbooks > Templates.
-- **Save Template**: Select "Save" in template details and choose storage location.
-- **Edit Workbook**: Click "Edit" in workbook toolbar to modify elements like time ranges or add new sections.
-- **Clone Workbook**: Use "Save as" to create a duplicate under the same subscription/resource group.
-- **Save Changes**: Save modifications to the workbook after editing.
-- **Workbooks Usage**: Customize based on persona (e.g., network admin) or frequency of use.
+**Overview**
+- **Microsoft Sentinel Workbooks**: Interactive dashboards based on Azure Monitor workbooks, used to visualize and monitor data from connected sources.
+
+**Prerequisites**
+- **Permissions**: Ensure you have at least Workbook Reader or Workbook Contributor permissions on the resource group of the Microsoft Sentinel workspace.
+- **Content Installation**: Install the desired workbook or solution from the Content Hub to access specific workbook templates.
+
+**Activating a Workbook Template**
+1. **Navigate to Workbooks**:
+   - In the Azure portal, go to **Microsoft Sentinel > Threat management > Workbooks**.
+2. **Access Templates**:
+   - Select the **Templates** tab to view installed workbook templates.
+3. **Save Template**:
+   - Choose a template and click **Save** to create an Azure resource based on it.
+4. **View Workbook**:
+   - Click **View saved workbook** to open the newly created workbook.
+
+**Customizing the Workbook**
+1. **Enter Edit Mode**:
+   - In the workbook toolbar, click **Edit** to enable customization.
+2. **Modify Content**:
+   - Adjust parameters like the **TimeRange** filter to change data views.
+   - Use **Edit** or the ellipsis (**...**) to add, move, clone, or remove elements.
+3. **Save Changes**:
+   - After customization, click **Save** to apply changes.
+4. **Clone Workbook** (Optional):
+   - To create a variant, use **Save as** to clone the workbook with a new name.
+
+**Best Practices**
+- **Template Selection**: Choose templates relevant to your connected data types for optimal insights.
+- **Iterative Customization**: Regularly update workbooks to reflect evolving monitoring needs.
+- **Access Control**: Assign appropriate permissions to ensure secure and efficient workbook management.
 
 📌 Source: [Visualize and monitor your data by using workbooks in Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/monitor-your-data?tabs=azure-portal#create-a-workbook-from-a-template)
 
 ---
 ## Create custom workbooks that include KQL
 
-**Create Custom Workbooks with KQL in Microsoft Sentinel**
-- **Add Workbook**: Navigate to Sentinel > Workbooks > Add Workbook.
-- **Data Source**: Set to 'Logs' and use Log Analytics workspace.
-- **Query Customization**: Use KQL queries to pull data (e.g., `SecurityEvent | where TimeGenerated > ago(7d)`).
-- **Parameters**: Add filters for interactivity (e.g., time range).
-- **Save Workbook**: Choose 'My Reports' for personal use, or 'Shared Reports' for organizational use.
-- **Visualize Data**: Use tiles to display query results in a customizable format.
+**Overview**
+- **Microsoft Sentinel Workbooks**: Interactive dashboards that visualize and monitor security data.
+- **Kusto Query Language (KQL)**: Query language used in Microsoft Sentinel to retrieve, filter, and analyze data.
+
+**Prerequisites**
+- **Permissions**: Require at least Workbook Reader or Workbook Contributor role.
+- **Data Sources**: Ensure Log Analytics and relevant security data sources are connected.
+
+**Steps to Create a Custom Workbook with KQL**
+1. **Access Workbooks**:
+   - Navigate to **Microsoft Sentinel > Threat management > Workbooks**.
+   - Click **Add workbook** to create a new one.
+2. **Enter Edit Mode**:
+   - Click **Edit** in the toolbar to enable customization.
+3. **Add a Query Control**:
+   - Click **Add query** to insert a query-based visualization.
+   - Set **Data source** to **Logs** and **Resource type** to **Log Analytics**.
+4. **Write and Run KQL Queries**:
+   - Enter a KQL query in the editor, such as:
+     
+     ```
+     SecurityIncident
+     | summarize count() by Severity
+     ```
+     
+   - Click **Run query** to view results.
+5. **Visualize Query Results**:
+   - Choose a visualization type (e.g., table, pie chart, time chart).
+   - Customize settings for clarity and readability.
+6. **Enhance with Additional Elements**:
+   - Add text blocks, headers, and parameters for interactivity.
+   - Use filters to refine displayed data dynamically.
+7. **Save the Workbook**:
+   - Click **Save**, then provide a name, subscription, and resource group.
+   - Use **Save as** to create a duplicate with modifications.
+
+**Best Practices**
+- **Optimize Queries**: Use filters and summaries to improve performance.
+- **Use Parameters**: Allow dynamic filtering for user-driven insights.
+- **Keep Layout Clean**: Organize sections logically with headings.
+- **Review Periodically**: Update workbooks to align with security trends.
 
 📌 Source: [Visualize and monitor your data by using workbooks in Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/monitor-your-data?tabs=azure-portal#create-new-workbook)
 
