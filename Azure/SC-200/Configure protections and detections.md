@@ -172,7 +172,7 @@
 ## Configure and manage custom detection rules
 
 **Overview**
-- Custom detection rules in Microsoft Defender XDR allow proactive monitoring of events and system states, including suspected breach activities and misconfigurations. These rules, based on advanced hunting queries, run at regular intervals to generate alerts and initiate response actions upon detecting matches. :contentReference[oaicite:0]{index=0}
+- Custom detection rules in Microsoft Defender XDR allow proactive monitoring of events and system states, including suspected breach activities and misconfigurations. These rules, based on advanced hunting queries, run at regular intervals to generate alerts and initiate response actions upon detecting matches.
 
 **Prerequisites**
 - **Permissions**: To manage custom detections, ensure you have one of the following roles:
