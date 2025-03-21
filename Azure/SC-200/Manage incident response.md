@@ -509,7 +509,7 @@
   - Viva Engage Groups
 
 **Prerequisites**
-- **Permissions**: Membership in the eDiscovery Manager role group within the Purview portal is required to access and utilize Content Search features. :contentReference[oaicite:1]{index=1}
+- **Permissions**: Membership in the eDiscovery Manager role group within the Purview portal is required to access and utilize Content Search features.
 - **Licensing**: An appropriate Microsoft 365 subscription that includes compliance features is necessary.
 
 **Creating and Running a Content Search**
