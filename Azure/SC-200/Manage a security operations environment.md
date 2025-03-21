@@ -737,9 +737,9 @@ https://learn.microsoft.com/en-us/azure/sentinel/connect-azure-windows-microsoft
    - Ensure the data is structured for the custom table format (fields, types, etc.).
 3. **Create Custom Log Table:**
    - In **Kusto Query Language (KQL)**, define the **custom log table schema**. For example:
-     ******kusto
+     ```
      .create table CustomLogs (timestamp: datetime, event_id: string, log_message: string)
-     ******
+     ```
    - Specify columns, types, and data structure.
 4. **Map Ingested Data to Table:**
    - Use **ingestion-time transformation** to map fields from the ingested data into the custom table schema.
