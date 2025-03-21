@@ -475,11 +475,11 @@
   - Microsoft Sentinel uses **Azure Role-Based Access Control (RBAC)** for access management.
 
 **Built-in Roles:**  
-  1. **Microsoft Sentinel Reader** – View incidents, logs, and rules but no modifications.  
-  2. **Microsoft Sentinel Responder** – Investigate and update incidents but cannot modify analytics rules.  
-  3. **Microsoft Sentinel Contributor** – Full access to manage Sentinel except workspace settings.  
-  4. **Log Analytics Contributor** – Manage log analytics settings (needed for Sentinel configurations).  
-  5. **Azure Owner, Contributor, and Reader** – Control workspace and resource permissions.  
+  1. **Microsoft Sentinel Reader**: View incidents, logs, and rules but no modifications.  
+  2. **Microsoft Sentinel Responder**: Investigate and update incidents but cannot modify analytics rules.  
+  3. **Microsoft Sentinel Contributor**: Full access to manage Sentinel except workspace settings.  
+  4. **Log Analytics Contributor**: Manage log analytics settings (needed for Sentinel configurations).  
+  5. **Azure Owner, Contributor, and Reader**: Control workspace and resource permissions.  
 
 **Role Assignment Steps:**  
   1. In **Azure Portal**, go to **Microsoft Sentinel**.  
