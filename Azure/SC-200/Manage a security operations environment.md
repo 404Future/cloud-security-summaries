@@ -1,46 +1,57 @@
 # Configure settings in Microsoft Defender XDR
 
-## Configure Alert and Vulnerability Notification Rules
+## Configure alert and vulnerability notification rules
+ 
+ **Access the Microsoft Defender Portal:**
+   - Sign in with an account assigned the Security Administrator or Global Administrator role. 
+ 
+ **Navigate to Email Notifications Settings:**
+   - Go to **Settings** > **Endpoints** > **General** > **Email notifications**. 
+ 
+ **Create a New Notification Rule:**
+   - Click **Add item**.
+   - Provide a **Rule name** and, optionally, a description.
+   - Optionally, include:
+     - Organization name in the email.
+     - Tenant-specific portal link for direct access.
+     - Device information in the email body.
+   - Define the scope:
+     - For alerts:
+       - Select whether to notify for alerts on all devices (Global Administrator only) or specific device groups.
+       - Choose the alert severity levels that trigger notifications.
+     - For vulnerabilities:
+       - Choose vulnerability events to trigger notifications:
+         - New vulnerability found (with severity threshold).
+         - Exploit verified.
+         - New public exploit.
+         - Exploit added to an exploit kit.
+ 
+ **Add Notification Recipients:**
+   - Enter the recipient's email address and click **Add recipient**. Repeat for multiple recipients.
+   - Optionally, send a test email to verify delivery.
+ 
+ **Finalize and Save the Rule:**
+   - Review all settings.
+   - Click **Save notification rule** to activate.
+ 
+ **Edit or Delete Notification Rules:**
+   - To edit:
+     - Select the desired rule.
+     - Modify settings as needed.
+     - Click **Save notification rule**.
+   - To delete:
+     - Select the desired rule.
+     - Click **Delete**.
+ 
+ **Best Practices:**
+ - **Use Least Privileged Roles:**
+   - Assign roles with the minimum permissions necessary. Reserve Global Administrator roles for essential scenarios to enhance security. 
+ - **Verify Email Deliverability:**
+   - Ensure notifications aren't filtered as junk or blocked by email security products. 
+ - **Regularly Review and Update Rules:**
+   - Periodically assess notification rules to ensure they align with current security requirements and organizational changes.
 
-### High-Level Summary
-- Configure email notifications in Microsoft Defender XDR for alerts and vulnerabilities.
-- Alerts notify based on severity; vulnerabilities notify based on events (e.g., new exploits).
-- Requires "Manage security settings" permission (Security/Global Administrator roles).
-- Supports device group scoping in Defender for Endpoint (not Defender for Business).
-- Rules define recipients, severity/event triggers, and optional details (e.g., org name).
-
-### Configure Alert Notification Rules
-- Sign in to Microsoft Defender portal (security.microsoft.com) with admin role.
-- Navigate: Settings > Endpoints > General > Email notifications > Add item.
-  - Set rule name, optional org name, tenant link, device info.
-- Choose devices: all (Global Admin) or specific groups.
-  - Select alert severity (e.g., High, Medium) to trigger notifications.
-  - Add recipient emails, test with "Send test email."
-  - Save rule; edit/delete via rule list.
-- Troubleshooting: Check Junk folder, email filters.
-  - New recipients only get alerts post-addition.
-- Best practice: Use least-privileged roles (e.g., Security Admin).
-
-### Configure Vulnerability Notification Rules
-- Sign in to Microsoft Defender portal with Security Administrator role.
-- Navigate: Settings > Endpoints > General > Email notifications > Vulnerabilities.
-  - Click "Add notification rule," name it, activate it.
-  - Define events (e.g., new public exploit) to trigger notifications.
-  - Select device groups (Defender for Endpoint only).
-  - Add recipient emails, proceed to save.
-  - Notifications include vulnerability details, portal links.
-  - RBAC limits recipients to configured device groups.
-- Troubleshooting: Ensure notifications aren’t blocked by filters.
-- Best practice: Minimize Global Admin use, test delivery.
-
-### Key Exam Topics
-- Permissions: Security/Global Admin for alerts; Security Admin for vulnerabilities.
-- Device groups: Supported in Defender for Endpoint, not Business.
-- Severity/event triggers: Alerts use severity; vulnerabilities use event types.
-- Portal navigation: Settings > Endpoints > Email notifications.
-- Troubleshooting: Check filters, Junk folder for non-delivery.
-
-### 📌 Source: 
+📌 Source: 
 - [Configure alert notifications](https://learn.microsoft.com/en-us/defender-xdr/configure-email-notifications)
 - [Configure vulnerability email notifications in Microsoft Defender for Endpoint](https://learn.microsoft.com/en-us/defender-endpoint/configure-vulnerability-email-notifications)
 
