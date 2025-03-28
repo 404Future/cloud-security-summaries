@@ -187,7 +187,7 @@
   - Ensure built-in alert policies are active to detect risks like malware activity and potential threats.
 - **Steps:**
   1. **Access** the Microsoft 365 Defender portal.
-  2. **Navigate** to **Settings** > **Email & collaboration** > **Policies & rules** > **Threat policies**.
+  2. **Navigate** to **Email & collaboration** > **Policies & rules** > **Threat policies**.
   3. **Review** and **enable** relevant alert policies to support automated investigations.
 
 **5. Managing Remediation Actions**
