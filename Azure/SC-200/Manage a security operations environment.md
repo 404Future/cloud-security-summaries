@@ -381,13 +381,13 @@
 
 **Remediation Process:**
   1. **Access Security Recommendations:**
-     - Navigate to the Microsoft 365 Defender portal.
-     - Select 'Vulnerabilities' under 'Threat & Vulnerability Management'.
+     - Navigate to the Defender portal.
+     - Select Endpoints > Vulnerability management > Recommendations.
   2. **Review and Prioritize:**
      - Examine the list of security recommendations.
      - Focus on high-risk vulnerabilities affecting critical assets.
   3. **Initiate Remediation:**
-     - For each recommendation, choose 'Open ticket' to create a remediation task.
+     - For each recommendation, choose 'Request remediation' to create a remediation task.
      - Assign tasks to the appropriate IT personnel or teams.
   4. **Monitor Progress:**
      - Track remediation activities and verify the implementation of security measures.
