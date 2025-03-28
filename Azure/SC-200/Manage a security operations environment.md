@@ -60,7 +60,7 @@
 
 **Access Advanced Features:**
   - Sign in to the Microsoft Defender portal.
-  - Navigate to **Settings** > **Microsoft Defender XDR** > **Rules > Alert tuning**. 
+  - Navigate to **Settings** > **Endpoints** > **General** > **Advanced Features**. 
 
 **Enable or Disable Features:**
   - Toggle desired features On or Off.
@@ -100,12 +100,12 @@
   - Suppress alerts from known benign tools or processes to reduce noise.
 - **Steps to Create a Suppression Rule:**
   1. **Sign in** to the Microsoft Defender portal with appropriate administrative privileges.
-  2. **Navigate** to **Settings** > **Endpoints** > **Rules** > **Alert suppression**.
+  2. **Navigate** to **Settings** > **Microsoft Defender XDR** > **Rules > Alert tuning**.
   3. **Select** an existing alert to base the suppression rule on.
   4. **Define** the conditions and scope for the rule.
   5. **Save** the rule to activate suppression.
 - **Managing Suppression Rules:**
-  - **View** all suppression rules under **Alert suppression**.
+  - **View** all suppression rules under **Alert tuning**.
   - **Edit**, **disable**, or **delete** rules as necessary.
 - **Best Practices:**
   - Regularly **review** suppression rules to ensure they align with current security policies.
