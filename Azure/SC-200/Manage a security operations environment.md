@@ -194,7 +194,7 @@
 - **Action Center:**
   - Monitor and manage remediation actions identified during automated investigations.
 - **Steps:**
-  1. **Go to** the **Action center** in the Microsoft Defender portal.
+  1. **Go to** the **Action center** (Investigation & response > Actions & submissions) in the Microsoft Defender portal.
   2. **Review** pending and completed actions.
   3. **Approve** or **reject** pending actions as necessary.
 - **Recommendation:**
@@ -236,8 +236,8 @@
 
 **4. Managing Exclusions**
 - **Exclude User Accounts from Automated Responses:**
-  1. In the Defender portal, go to **Settings** > **Microsoft Defender XDR** > **Identities**.
-  2. Under **Automated response exclusions**, select **Add user exclusion**.
+  1. In the Defender portal, go to **Settings** > **Microsoft Defender XDR** > **Automated response**.
+  2. Under **Identity automated response**, select **Add user exclusion**.
   3. Choose user accounts to exclude and save changes. 
 - **Exclude IP Addresses (Preview):**
   - Exclude specific IPs from automated containment actions by configuring exclusions in the Defender portal. 
@@ -289,11 +289,11 @@
 - **Purpose:** Control the extent of automated actions Defender for Endpoint can take on detected threats.
 - **Automation Levels:**
   - **None:** No automatic actions; manual remediation required.
-  - **Limited:** Automatic actions for certain cases (e.g., quarantining files).
+  - **Semi:** Automatic actions for certain cases (e.g., quarantining files).
   - **Full:** Automated actions, including blocking threats and remediating issues.
 - **Steps to Configure Automation Levels:**
-  - Navigate to **Settings** > **Endpoints** > **Automated Investigation & Response**.
-  - Choose the automation level: None, Limited, or Full.
+  - Navigate to **Settings** > **Endpoints** > **Permissions** > **Device groups**.
+  - Choose the automation level: None, Semi, or Full.
   - Define which actions (quarantine, block, etc.) are allowed based on the level.
 - **Best Practices:**
   - Set automation levels based on organization needs and risk tolerance.
