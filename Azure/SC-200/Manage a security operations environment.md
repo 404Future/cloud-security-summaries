@@ -60,7 +60,7 @@
 
 **Access Advanced Features:**
   - Sign in to the Microsoft Defender portal.
-  - Navigate to **Settings** > **Endpoints** > **Advanced features**. 
+  - Navigate to **Settings** > **Microsoft Defender XDR** > **Rules > Alert tuning**. 
 
 **Enable or Disable Features:**
   - Toggle desired features On or Off.
